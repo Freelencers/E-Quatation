@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Oct 23, 2018 at 12:55 PM
+-- Generation Time: Oct 23, 2018 at 12:58 PM
 -- Server version: 5.6.37
 -- PHP Version: 5.6.30
 
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `cp357577_otec`
+-- Database: `cp357577_develop`
 --
 
 -- --------------------------------------------------------
@@ -33,7 +33,7 @@ CREATE TABLE `accessory` (
   `acc_pro_id` int(11) NOT NULL,
   `acc_qty` int(11) NOT NULL,
   `acc_prj_id` int(11) NOT NULL,
-  `acc_discount` varchar(10) DEFAULT '0'
+  `acc_discount` varchar(10) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -41,8 +41,8 @@ CREATE TABLE `accessory` (
 --
 
 INSERT INTO `accessory` (`acc_id`, `acc_pro_id`, `acc_qty`, `acc_prj_id`, `acc_discount`) VALUES
-(1, 5, 1, 1, '0'),
-(2, 4, 5, 1, '0');
+(1, 4, 1, 1, '0'),
+(2, 3, 1, 1, '0');
 
 -- --------------------------------------------------------
 
@@ -60,7 +60,7 @@ CREATE TABLE `attachment` (
 --
 
 INSERT INTO `attachment` (`att_id`, `att_name`) VALUES
-(1, 'Rise'),
+(1, 'Riser'),
 (2, 'Vendor list'),
 (3, 'Floor plan'),
 (4, 'ปริมาณ'),
@@ -85,7 +85,8 @@ CREATE TABLE `attachment_log` (
 
 INSERT INTO `attachment_log` (`atl_id`, `atl_att_id`, `atl_prj_id`) VALUES
 (1, 1, 1),
-(2, 4, 1);
+(2, 2, 1),
+(3, 3, 1);
 
 -- --------------------------------------------------------
 
@@ -109,9 +110,7 @@ INSERT INTO `brand` (`bra_id`, `bra_name`, `bra_delete`) VALUES
 (3, 'Panasonic', 0),
 (4, 'GE Security', 0),
 (5, 'HID', 0),
-(6, 'Galaxy', 0),
-(7, 'test_del', 1),
-(8, 'testss', 1);
+(6, 'Galaxy', 0);
 
 -- --------------------------------------------------------
 
@@ -130,10 +129,10 @@ CREATE TABLE `brand_log` (
 --
 
 INSERT INTO `brand_log` (`brl_id`, `brl_syl_id`, `brl_bra_id`) VALUES
-(1, 1, 3),
-(2, 1, 5),
+(1, 1, 1),
+(2, 1, 2),
 (3, 2, 2),
-(4, 2, 6);
+(4, 2, 3);
 
 -- --------------------------------------------------------
 
@@ -143,7 +142,7 @@ INSERT INTO `brand_log` (`brl_id`, `brl_syl_id`, `brl_bra_id`) VALUES
 
 CREATE TABLE `condition` (
   `con_id` int(11) NOT NULL,
-  `con_value` varchar(50) NOT NULL
+  `con_value` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -151,7 +150,13 @@ CREATE TABLE `condition` (
 --
 
 INSERT INTO `condition` (`con_id`, `con_value`) VALUES
-(1, 'ทดสอบเงื่อนไข');
+(1, 'ราคาที่เสนอรวมกับ VAT เป็นที่เรียบร้อย'),
+(2, 'ราคานี้มีผลภายใน 30 วัน'),
+(3, ' บริษัทจะจัดส่งสินค้าภายใน 45 วัน นับจากวันที่ได้ร'),
+(4, '30% เงินมัดจำการสั่ง ซื้อ โปรดชำระภายใน 7 วัน เมื่ออนุมัติการสั่งซื้อ'),
+(5, '70% ของมูลค่าสินค้าที่จัดส่งจริงในแต่ละงวด โปรดชำระเป็น PDC เช็ค 30 วัน เมื่อได้เซ็นรับสินค้า'),
+(99, 'อื่น ๆ'),
+(100, 'เงื่อนไชทดสอบ02');
 
 -- --------------------------------------------------------
 
@@ -160,11 +165,22 @@ INSERT INTO `condition` (`con_id`, `con_value`) VALUES
 --
 
 CREATE TABLE `condition_log` (
-  `col_id` int(11) UNSIGNED NOT NULL,
+  `col_id` int(11) NOT NULL,
   `col_prj_id` int(11) NOT NULL,
   `col_con_id` int(11) NOT NULL,
   `col_con_other` text CHARACTER SET utf8
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `condition_log`
+--
+
+INSERT INTO `condition_log` (`col_id`, `col_prj_id`, `col_con_id`, `col_con_other`) VALUES
+(1, 1, 3, NULL),
+(2, 1, 4, NULL),
+(3, 1, 99, 'ทดสอบ Condition'),
+(4, 1, 99, 'เงื่อนไชทดสอบ'),
+(5, 1, 99, 'เงื่อนไชทดสอบ02');
 
 -- --------------------------------------------------------
 
@@ -213,11 +229,8 @@ CREATE TABLE `employee` (
 --
 
 INSERT INTO `employee` (`emp_id`, `emp_username`, `emp_password`, `emp_first_name`, `emp_last_name`, `emp_create`, `emp_update`, `emp_pos_id`, `emp_email`, `emp_delete`, `emp_approve`) VALUES
-(106, 'admin', 'admin@2017', 'Admin', 'Admin', '2017-11-19 14:28:14', '2017-11-02 15:02:21', 1, 'admin@admin.com', 0, 1),
-(124, 'sale', 'sale@2017', 'Sale', 'Sale', '2017-11-19 15:10:13', '0000-00-00 00:00:00', 3, 'sale@sale.com', 0, 1),
-(125, 'support', 'support@2017', 'Support', 'Support', '2017-11-19 15:10:18', '0000-00-00 00:00:00', 5, 'support@support.com', 0, 1),
-(126, 'estimate', 'estimate@2017', 'Estimate', 'Estimate', '2017-11-19 15:10:16', '0000-00-00 00:00:00', 4, 'estimate@estimate.com', 0, 1),
-(127, 'assistance', 'assistance@2017', 'Assistance', 'Assistance', '2017-11-19 15:10:50', '0000-00-00 00:00:00', 2, 'assistance', 0, 0);
+(106, 'admin', 'admin@2017', 'Pakorn', 'Traipan', '2017-11-22 02:39:58', '2017-11-02 15:02:21', 1, 'pakorn_traipan@icloud.com', 0, 1),
+(130, 'Sale', 'Sale', 'Firstnamr', 'Lastname', '2018-01-14 07:14:18', '0000-00-00 00:00:00', 3, 'sale@company.com', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -230,7 +243,7 @@ CREATE TABLE `follow_up` (
   `fol_type` int(1) NOT NULL COMMENT '0 = support, 1 = estimate',
   `fol_date` date NOT NULL,
   `fol_success` int(3) NOT NULL,
-  `fol_msg` text NOT NULL,
+  `fol_msg` text CHARACTER SET utf8 NOT NULL,
   `fol_prj_id` int(11) NOT NULL,
   `fol_emp_id` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
@@ -240,8 +253,15 @@ CREATE TABLE `follow_up` (
 --
 
 INSERT INTO `follow_up` (`fol_id`, `fol_type`, `fol_date`, `fol_success`, `fol_msg`, `fol_prj_id`, `fol_emp_id`) VALUES
-(1, 0, '2017-11-19', 10, 'DEMO', 1, 106),
-(2, 1, '2017-11-19', 10, 'DEMO', 1, 106);
+(1, 1, '2018-01-14', 10, 'Follow msg 01', 1, 106),
+(2, 0, '2018-01-14', 15, 'Follow up msg 01', 1, 106),
+(3, 0, '2018-05-28', 0, 'test', 1, 106),
+(4, 0, '2018-05-28', 0, 'test', 1, 106),
+(5, 0, '2018-05-28', 0, 'test', 1, 106),
+(6, 0, '2018-05-28', 0, 'test', 1, 106),
+(7, 0, '2018-05-28', 0, 'test', 1, 106),
+(8, 0, '2018-05-28', 0, 'test', 1, 106),
+(9, 0, '2018-07-02', 0, 'TEST', 1, 106);
 
 -- --------------------------------------------------------
 
@@ -263,9 +283,9 @@ CREATE TABLE `hardware` (
 --
 
 INSERT INTO `hardware` (`har_id`, `har_pro_id`, `har_prj_id`, `har_qty`, `har_syt_id`, `har_discount`) VALUES
-(1, 1, 1, 5, 1, '0'),
-(2, 4, 1, 5, 1, '0'),
-(3, 5, 1, 10, 1, '0');
+(1, 2, 1, 1, 1, '10+5'),
+(2, 2, 1, 1, 1, '1'),
+(3, 5, 1, 5, 2, '1');
 
 -- --------------------------------------------------------
 
@@ -310,57 +330,43 @@ CREATE TABLE `log` (
 --
 
 INSERT INTO `log` (`log_id`, `log_msg`, `log_date`, `log_emp_id`) VALUES
-(1, 'Acess Employee', '2017-11-19 15:03:01', 106),
-(2, 'Acess Fundamental', '2017-11-19 15:03:17', 106),
-(3, 'Acess Employee', '2017-11-19 15:03:49', 106),
-(4, 'Acess Employee', '2017-11-19 15:04:30', 106),
-(5, 'Acess Employee', '2017-11-19 15:04:52', 106),
-(6, 'Acess Employee', '2017-11-19 15:05:01', 106),
-(7, 'Acess Fundamental', '2017-11-19 15:05:04', 106),
-(8, 'Acess Employee', '2017-11-19 15:07:27', 106),
-(9, 'Create user sale', '2017-11-19 15:07:58', 106),
-(10, 'Create user support', '2017-11-19 15:08:40', 106),
-(11, 'Create user estimate', '2017-11-19 15:09:11', 106),
-(12, 'Grand permission user sale', '2017-11-19 15:09:27', 106),
-(13, 'Grand permission user sale', '2017-11-19 15:09:28', 106),
-(14, 'Grand permission user sale', '2017-11-19 15:09:28', 106),
-(15, 'Grand permission user sale', '2017-11-19 15:09:29', 106),
-(16, 'Grand permission user sale', '2017-11-19 15:09:30', 106),
-(17, 'Grand permission user sale', '2017-11-19 15:09:31', 106),
-(18, 'Grand permission user sale', '2017-11-19 15:09:32', 106),
-(19, 'Grand permission user estimate', '2017-11-19 15:09:37', 106),
-(20, 'Grand permission user estimate', '2017-11-19 15:09:38', 106),
-(21, 'Grand permission user estimate', '2017-11-19 15:09:39', 106),
-(22, 'Grand permission user estimate', '2017-11-19 15:09:40', 106),
-(23, 'Grand permission user estimate', '2017-11-19 15:09:41', 106),
-(24, 'Grand permission user estimate', '2017-11-19 15:09:41', 106),
-(25, 'Grand permission user estimate', '2017-11-19 15:09:42', 106),
-(26, 'Grand permission user support', '2017-11-19 15:09:46', 106),
-(27, 'Grand permission user support', '2017-11-19 15:09:47', 106),
-(28, 'Grand permission user support', '2017-11-19 15:09:48', 106),
-(29, 'Grand permission user support', '2017-11-19 15:09:49', 106),
-(30, 'Grand permission user support', '2017-11-19 15:09:49', 106),
-(31, 'Grand permission user support', '2017-11-19 15:09:50', 106),
-(32, 'Grand permission user support', '2017-11-19 15:09:51', 106),
-(33, 'Approve user sale', '2017-11-19 15:10:13', 106),
-(34, 'Approve user estimate', '2017-11-19 15:10:16', 106),
-(35, 'Approve user support', '2017-11-19 15:10:18', 106),
-(36, 'Create user assistance', '2017-11-19 15:10:50', 106),
-(37, 'Acess Employee', '2017-11-19 15:15:42', 106),
-(38, 'Acess Employee', '2017-11-19 17:41:32', 106),
-(39, 'Acess Employee', '2017-11-20 12:12:05', 106),
-(40, 'Acess Fundamental', '2017-11-20 12:12:12', 106),
-(41, 'Acess Employee', '2017-11-21 17:17:18', 106),
-(42, 'Acess Employee', '2017-11-21 17:18:18', 106),
-(43, 'Acess Employee', '2018-03-05 02:41:16', 106),
-(44, 'Acess Employee', '2018-05-28 08:42:55', 106),
-(45, 'Acess Employee', '2018-05-28 08:42:59', 106),
-(46, 'Acess Employee', '2018-05-28 08:44:56', 106),
-(47, 'Acess Employee', '2018-05-28 08:45:55', 106),
-(48, 'Acess Fundamental', '2018-05-28 08:46:26', 106),
-(49, 'Acess Employee', '2018-05-28 08:47:21', 106),
-(50, 'Acess Employee', '2018-05-28 08:47:50', 106),
-(51, 'Acess Employee', '2018-08-24 15:22:40', 106);
+(1, 'Acess Employee', '2018-01-14 05:48:00', 106),
+(2, 'Acess Fundamental', '2018-01-14 05:48:07', 106),
+(3, 'Acess Fundamental', '2018-01-14 05:48:11', 106),
+(4, 'Acess Fundamental', '2018-01-14 05:48:13', 106),
+(5, 'Acess Fundamental', '2018-01-14 05:48:16', 106),
+(6, 'Insert product  model:SAMPLE id:1 detail :{\"pro_id\":\"1\",\"pro_model\":\"SAMPLE\",\"pro_pic\":\"2c03174f3b4eb0fcb3f2198dd84a638d.png\",\"pro_description\":\"\",\"pro_cost\":\"1\",\"pro_price\":\"10\",\"pro_profit\":\"9\",\"pro_bra_id\":\"6\",\"pro_uni_id\":\"1\",\"pro_delete\":\"0\"}', '2018-01-14 07:08:55', 106),
+(7, 'Insert product  model:SAMPLE id:2 detail :{\"pro_id\":\"2\",\"pro_model\":\"SAMPLE\",\"pro_pic\":\"aa2c1287448c2ba2023fa1d2c6f97d2d.png\",\"pro_description\":\"\",\"pro_cost\":\"1\",\"pro_price\":\"10\",\"pro_profit\":\"9\",\"pro_bra_id\":\"1\",\"pro_uni_id\":\"1\",\"pro_delete\":\"0\"}', '2018-01-14 07:09:16', 106),
+(8, 'Insert product  model:SAMPLE id:3 detail :{\"pro_id\":\"3\",\"pro_model\":\"SAMPLE\",\"pro_pic\":\"110c059343d5fdae9896369c9ecc79be.png\",\"pro_description\":\"\",\"pro_cost\":\"1\",\"pro_price\":\"10\",\"pro_profit\":\"9\",\"pro_bra_id\":\"2\",\"pro_uni_id\":\"1\",\"pro_delete\":\"0\"}', '2018-01-14 07:09:33', 106),
+(9, 'Insert product  model:SAMPLE id:4 detail :{\"pro_id\":\"4\",\"pro_model\":\"SAMPLE\",\"pro_pic\":\"37ad703aaa97d030a5a91df8803b636c.png\",\"pro_description\":\"\",\"pro_cost\":\"1\",\"pro_price\":\"10\",\"pro_profit\":\"9\",\"pro_bra_id\":\"3\",\"pro_uni_id\":\"0\",\"pro_delete\":\"0\"}', '2018-01-14 07:09:46', 106),
+(10, 'Insert product  model:SAMPLE id:5 detail :{\"pro_id\":\"5\",\"pro_model\":\"SAMPLE\",\"pro_pic\":\"f83bda31a7af89d2ffdc079622b6d35c.png\",\"pro_description\":\"\",\"pro_cost\":\"1\",\"pro_price\":\"10\",\"pro_profit\":\"9\",\"pro_bra_id\":\"4\",\"pro_uni_id\":\"0\",\"pro_delete\":\"0\"}', '2018-01-14 07:09:59', 106),
+(11, 'Insert product  model:SAMPLE id:6 detail :{\"pro_id\":\"6\",\"pro_model\":\"SAMPLE\",\"pro_pic\":\"62dc84c344486b339ab415bb91dbb208.png\",\"pro_description\":\"\",\"pro_cost\":\"1\",\"pro_price\":\"10\",\"pro_profit\":\"9\",\"pro_bra_id\":\"5\",\"pro_uni_id\":\"1\",\"pro_delete\":\"0\"}', '2018-01-14 07:10:13', 106),
+(12, 'Acess Fundamental', '2018-01-14 07:12:26', 106),
+(13, 'Acess Employee', '2018-01-14 07:12:35', 106),
+(14, 'Acess Fundamental', '2018-01-14 07:12:38', 106),
+(15, 'Acess Employee', '2018-01-14 07:13:36', 106),
+(16, 'Create user Sale', '2018-01-14 07:14:13', 106),
+(17, 'Approve user Sale', '2018-01-14 07:14:18', 106),
+(18, 'Acess Employee', '2018-01-14 07:56:33', 106),
+(19, 'Acess Employee', '2018-01-14 07:56:48', 106),
+(20, 'Acess Employee', '2018-01-14 07:59:46', 106),
+(21, 'Acess Fundamental', '2018-01-14 08:03:44', 106),
+(22, 'Acess Fundamental', '2018-01-14 08:44:25', 106),
+(23, 'Acess Employee', '2018-06-29 10:21:56', 106),
+(24, 'Acess Employee', '2018-06-29 10:22:18', 106),
+(25, 'Acess Fundamental', '2018-06-29 10:38:39', 106),
+(26, 'Acess Employee', '2018-06-29 10:38:44', 106),
+(27, 'Acess Employee', '2018-06-29 10:38:57', 106),
+(28, 'Acess Employee', '2018-07-02 04:49:25', 106),
+(29, 'Acess Employee', '2018-07-02 04:49:29', 106),
+(30, 'Acess Employee', '2018-07-02 04:50:10', 106),
+(31, 'Acess Employee', '2018-07-02 04:50:55', 106),
+(32, 'Acess Employee', '2018-07-02 08:52:24', 106),
+(33, 'Acess Employee', '2018-07-02 08:52:33', 106),
+(34, 'Acess Employee', '2018-07-02 08:52:50', 106),
+(35, 'Acess Employee', '2018-07-02 09:20:18', 106),
+(36, 'Acess Fundamental', '2018-07-02 09:20:34', 106),
+(37, 'Acess Fundamental', '2018-07-02 09:21:56', 106);
 
 -- --------------------------------------------------------
 
@@ -387,35 +393,14 @@ INSERT INTO `permission_module` (`pmm_id`, `pmm_emp_id`, `pmm_stm_id`, `pmm_read
 (10, 106, 4, 1, 0),
 (11, 106, 5, 1, 0),
 (12, 106, 6, 1, 0),
-(146, 127, 7, 0, 0),
-(145, 127, 6, 0, 0),
-(144, 127, 5, 0, 0),
-(143, 127, 4, 0, 0),
-(142, 127, 3, 0, 0),
-(141, 127, 2, 0, 0),
-(140, 127, 1, 0, 0),
-(139, 126, 7, 1, 0),
-(138, 126, 6, 1, 0),
-(137, 126, 5, 1, 0),
-(136, 126, 4, 1, 0),
-(135, 126, 3, 1, 0),
-(134, 126, 2, 1, 0),
-(133, 126, 1, 1, 0),
-(132, 125, 7, 1, 0),
-(131, 125, 6, 1, 0),
-(130, 125, 5, 1, 0),
-(129, 125, 4, 1, 0),
-(128, 125, 3, 1, 0),
-(127, 125, 2, 1, 0),
-(126, 125, 1, 1, 0),
-(125, 124, 7, 1, 0),
-(124, 124, 6, 1, 0),
-(123, 124, 5, 1, 0),
-(122, 124, 4, 1, 0),
-(121, 124, 3, 1, 0),
-(120, 124, 2, 1, 0),
-(119, 124, 1, 1, 0),
-(118, 106, 7, 1, 0);
+(168, 106, 7, 1, 0),
+(167, 130, 7, 0, 0),
+(166, 130, 6, 0, 0),
+(165, 130, 5, 0, 0),
+(164, 130, 4, 0, 0),
+(163, 130, 3, 0, 0),
+(162, 130, 2, 0, 0),
+(161, 130, 1, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -478,7 +463,7 @@ CREATE TABLE `product` (
   `pro_price` double NOT NULL,
   `pro_profit` double NOT NULL,
   `pro_bra_id` int(10) NOT NULL,
-  `pro_uni_id` int(11) NOT NULL,
+  `pro_uni_id` int(11) NOT NULL DEFAULT '1',
   `pro_delete` int(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -487,11 +472,12 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`pro_id`, `pro_model`, `pro_pic`, `pro_description`, `pro_cost`, `pro_price`, `pro_profit`, `pro_bra_id`, `pro_uni_id`, `pro_delete`) VALUES
-(1, 'MODEL', 'f2c7e4e54b9be25401688ea9a4e77568.png', 'DEMO', 10, 20, 10, 1, 1, 0),
-(2, 'MODEL', 'f878fed9b3de43ec832334cd12bb8479.png', 'DEMO', 10, 20, 10, 1, 2, 0),
-(3, 'MODEL', '93cc731a5f2da212c4528da133868309.png', 'DEMO', 10, 20, 10, 1, 2, 0),
-(4, 'MODEL', '5bb060e2984b56e044af3ed31ad52cc1.png', 'DEMO', 10, 20, 10, 2, 3, 0),
-(5, 'MODEL', '0662c747ae5b12c4112080eaeace7ded.png', 'DEMO', 10, 20, 10, 3, 3, 0);
+(1, 'SAMPLE', '2c03174f3b4eb0fcb3f2198dd84a638d.png', '', 1, 10, 9, 6, 1, 0),
+(2, 'SAMPLE', 'aa2c1287448c2ba2023fa1d2c6f97d2d.png', '', 1, 10, 9, 1, 1, 0),
+(3, 'SAMPLE', '110c059343d5fdae9896369c9ecc79be.png', '', 1, 10, 9, 2, 1, 0),
+(4, 'SAMPLE', '37ad703aaa97d030a5a91df8803b636c.png', '', 1, 10, 9, 3, 1, 0),
+(5, 'SAMPLE', 'f83bda31a7af89d2ffdc079622b6d35c.png', '', 1, 10, 9, 4, 1, 0),
+(6, 'SAMPLE', '62dc84c344486b339ab415bb91dbb208.png', '', 1, 10, 9, 5, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -517,24 +503,24 @@ CREATE TABLE `project` (
   `prj_att_location` varchar(255) DEFAULT NULL,
   `prj_parent_id` int(11) DEFAULT NULL,
   `prj_version` varchar(2) DEFAULT NULL,
+  `prj_last_version` int(11) NOT NULL DEFAULT '0',
   `prj_discount` double DEFAULT '0',
+  `prj_vat` int(11) NOT NULL DEFAULT '7',
   `prj_price` double NOT NULL DEFAULT '0',
   `prj_plt_id` int(11) NOT NULL,
   `prj_wor_id` int(10) NOT NULL,
   `prj_sta_id` int(10) NOT NULL,
   `prj_emp_id` int(10) NOT NULL,
   `prj_delete` int(1) NOT NULL DEFAULT '0',
-  `prj_create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `prj_vat` int(11) DEFAULT '7',
-  `prj_last_version` int(11) DEFAULT '0'
+  `prj_create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `project`
 --
 
-INSERT INTO `project` (`prj_id`, `prj_ref_no`, `prj_title`, `prj_company`, `prj_contact`, `prj_mobile`, `prj_tel`, `prj_fax`, `prj_email`, `prj_ctp_id`, `prj_regular_customer`, `prj_customer_name`, `prj_wot_date`, `prj_att_file`, `prj_att_location`, `prj_parent_id`, `prj_version`, `prj_discount`, `prj_price`, `prj_plt_id`, `prj_wor_id`, `prj_sta_id`, `prj_emp_id`, `prj_delete`, `prj_create_date`, `prj_vat`, `prj_last_version`) VALUES
-(1, '201711191', 'DEMO', 'DEMO', 'DEMO', '(000) 000-0000', '(000) 000-0000', '(000) 000-0000', 'demo@demo.com', 1, 1, 'DEMO', '2017-11-22', 'C:\\fakepath\\box.png', 'DEMO', NULL, NULL, 0, 260, 1, 1, 1, 124, 0, '2018-05-28 08:49:36', 7, 0);
+INSERT INTO `project` (`prj_id`, `prj_ref_no`, `prj_title`, `prj_company`, `prj_contact`, `prj_mobile`, `prj_tel`, `prj_fax`, `prj_email`, `prj_ctp_id`, `prj_regular_customer`, `prj_customer_name`, `prj_wot_date`, `prj_att_file`, `prj_att_location`, `prj_parent_id`, `prj_version`, `prj_last_version`, `prj_discount`, `prj_vat`, `prj_price`, `prj_plt_id`, `prj_wor_id`, `prj_sta_id`, `prj_emp_id`, `prj_delete`, `prj_create_date`) VALUES
+(1, '20180114001', 'Fist project', 'Company name', 'Fistname Lastname', '(088) 888-8888', '(088) 888-8888', '(088) 888-8888', 'sale@company.com', 1, 0, 'Customer_01', '2018-01-03', '', '', NULL, NULL, 0, 0, 7, 201, 2, 2, 1, 130, 0, '2018-01-14 14:16:22');
 
 -- --------------------------------------------------------
 
@@ -559,16 +545,43 @@ CREATE TABLE `quatation` (
 
 CREATE TABLE `scope_of_work` (
   `sow_id` int(11) NOT NULL,
-  `sow_value` varchar(50) NOT NULL,
-  `sow_prj_id` int(11) NOT NULL
+  `sow_value` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `scope_of_work`
 --
 
-INSERT INTO `scope_of_work` (`sow_id`, `sow_value`, `sow_prj_id`) VALUES
-(1, 'ทดสอบขอบเขตงาน', 1);
+INSERT INTO `scope_of_work` (`sow_id`, `sow_value`) VALUES
+(1, 'ให้บริการแนะนำ  การติดตั้งเป็นระยะ 1 ครั้ง'),
+(2, 'รับประกันสินค้า และบริการ  เป็นระยะเวลา 1 ปี'),
+(3, ' เอกสารคู่มือ จำนวน 3 ชุด'),
+(9, 'xxxxxx'),
+(10, 'fffff'),
+(99, 'อื่น ๆ');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `scope_of_work_log`
+--
+
+CREATE TABLE `scope_of_work_log` (
+  `sol_id` int(11) NOT NULL,
+  `sol_sow_id` int(11) NOT NULL,
+  `sol_sow_other` text CHARACTER SET utf8 NOT NULL,
+  `sol_prj_id` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `scope_of_work_log`
+--
+
+INSERT INTO `scope_of_work_log` (`sol_id`, `sol_sow_id`, `sol_sow_other`, `sol_prj_id`) VALUES
+(1, 2, '', 1),
+(2, 99, 'ทดสอบ scope of work', 1),
+(3, 99, 'xxxxxx', 1),
+(4, 99, 'fffff', 1);
 
 -- --------------------------------------------------------
 
@@ -596,7 +609,10 @@ INSERT INTO `services` (`ser_id`, `ser_name`) VALUES
 (8, 'ค่าเดินทาง (ครั้ง)'),
 (9, 'ค่าที่พัก'),
 (10, 'Service'),
-(11, 'Warranty');
+(11, 'Warranty'),
+(12, 'ค่าดำเดินการต่าง ๆ'),
+(15, 'gggg'),
+(99, 'อื่น ๆ');
 
 -- --------------------------------------------------------
 
@@ -608,18 +624,20 @@ CREATE TABLE `service_log` (
   `sel_id` int(11) NOT NULL,
   `sel_prj_id` int(11) NOT NULL,
   `sel_ser_id` int(11) NOT NULL,
-  `sel_ser_price` int(11) DEFAULT '0',
   `sel_ser_other` text,
-  `sel_ser_unit` int(11) DEFAULT '1'
+  `sel_ser_price` int(11) NOT NULL,
+  `sel_ser_unit` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `service_log`
 --
 
-INSERT INTO `service_log` (`sel_id`, `sel_prj_id`, `sel_ser_id`, `sel_ser_price`, `sel_ser_other`, `sel_ser_unit`) VALUES
-(1, 1, 1, 1000, NULL, 1),
-(2, 1, 4, 2500, NULL, 1);
+INSERT INTO `service_log` (`sel_id`, `sel_prj_id`, `sel_ser_id`, `sel_ser_other`, `sel_ser_price`, `sel_ser_unit`) VALUES
+(1, 1, 2, NULL, 10, 5),
+(2, 1, 6, NULL, 4, 5),
+(3, 1, 99, 'rrrr', 11, 11),
+(4, 1, 99, 'gggg', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -885,6 +903,12 @@ ALTER TABLE `scope_of_work`
   ADD PRIMARY KEY (`sow_id`);
 
 --
+-- Indexes for table `scope_of_work_log`
+--
+ALTER TABLE `scope_of_work_log`
+  ADD PRIMARY KEY (`sol_id`);
+
+--
 -- Indexes for table `services`
 --
 ALTER TABLE `services`
@@ -950,7 +974,7 @@ ALTER TABLE `attachment`
 -- AUTO_INCREMENT for table `attachment_log`
 --
 ALTER TABLE `attachment_log`
-  MODIFY `atl_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `atl_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `brand`
 --
@@ -965,12 +989,12 @@ ALTER TABLE `brand_log`
 -- AUTO_INCREMENT for table `condition`
 --
 ALTER TABLE `condition`
-  MODIFY `con_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `con_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
 --
 -- AUTO_INCREMENT for table `condition_log`
 --
 ALTER TABLE `condition_log`
-  MODIFY `col_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `col_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `customer_type`
 --
@@ -980,12 +1004,12 @@ ALTER TABLE `customer_type`
 -- AUTO_INCREMENT for table `employee`
 --
 ALTER TABLE `employee`
-  MODIFY `emp_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=128;
+  MODIFY `emp_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=131;
 --
 -- AUTO_INCREMENT for table `follow_up`
 --
 ALTER TABLE `follow_up`
-  MODIFY `fol_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `fol_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT for table `hardware`
 --
@@ -1005,17 +1029,17 @@ ALTER TABLE `item_set_log`
 -- AUTO_INCREMENT for table `log`
 --
 ALTER TABLE `log`
-  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 --
 -- AUTO_INCREMENT for table `permission_module`
 --
 ALTER TABLE `permission_module`
-  MODIFY `pmm_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=147;
+  MODIFY `pmm_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=169;
 --
 -- AUTO_INCREMENT for table `place_type`
 --
 ALTER TABLE `place_type`
-  MODIFY `plt_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `plt_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT for table `position`
 --
@@ -1025,7 +1049,7 @@ ALTER TABLE `position`
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `pro_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `pro_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `project`
 --
@@ -1040,17 +1064,22 @@ ALTER TABLE `quatation`
 -- AUTO_INCREMENT for table `scope_of_work`
 --
 ALTER TABLE `scope_of_work`
-  MODIFY `sow_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `sow_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+--
+-- AUTO_INCREMENT for table `scope_of_work_log`
+--
+ALTER TABLE `scope_of_work_log`
+  MODIFY `sol_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `services`
 --
 ALTER TABLE `services`
-  MODIFY `ser_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `ser_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT for table `service_log`
 --
 ALTER TABLE `service_log`
-  MODIFY `sel_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `sel_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `status`
 --
@@ -1070,7 +1099,7 @@ ALTER TABLE `system_module`
 -- AUTO_INCREMENT for table `system_type`
 --
 ALTER TABLE `system_type`
-  MODIFY `syt_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `syt_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `unit`
 --
