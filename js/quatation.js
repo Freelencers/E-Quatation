@@ -112,17 +112,54 @@ $("#prj_search").change(function(){
 
 //##########################
 
+// Load scope of work
+$.post("C_scope_of_work/api_get_scope_of_work", "", function(data){
+    
+   var option = ""; 
+    for(var i=0;i< data.length;i++){
+
+        if(data[i].sow_id != 99){
+            var option = new Option(data[i].sow_value, data[i].sow_id);
+            $(".work_list").append(option);
+        }
+    }
+    option = new Option("อื่น ๆ", 99);
+    $(".work_list").append(option);
+
+}, "json");
 
 // Load service
 $.post("C_services/api_get_services", "", function(data){
-    
+   
+    var option = "";
     for(var i=0;i< data.length;i++){
 
-        var option = new Option(data[i].ser_name, data[i].ser_id);
-        $(".service_list").append(option);
+        if(data[i].ser_id != 99){
+            option = new Option(data[i].ser_name, data[i].ser_id);
+            $(".service_list").append(option);
+        }
     }
+    option = new Option("อื่น ๆ", 99);
+    $(".service_list").append(option);
+
 }, "json");
 
+// Load condition
+$.post("C_condition/api_get_condition", "", function(data){
+   
+    console.log("condition");
+    for(var i=0;i< data.length;i++){
+
+        var option = "";
+        if(data[i].ser_id != 99){
+            option = new Option(data[i].con_value, data[i].con_id);
+            $(".condition_list").append(option);
+        }
+    }
+    option = new Option("อื่น ๆ", 99);
+    $(".condition_list").append(option);
+
+}, "json");
 
 
 // Load brand type 
@@ -270,7 +307,7 @@ function load_revised(prj_id){
                 // show no data
                 if(data.revise_history.length == 0){
         
-                    table = "<tr><td colspan='4' text-align='center'> No data </td></tr>";
+                    table = "<tr><td colspan='5' text-align='center'> No data </td></tr>";
                     $("#revise_history").append(table);
                 }
         
@@ -280,6 +317,7 @@ function load_revised(prj_id){
                     table += "<tr>";
                     table += "  <td>" + (i+1) + "</td>";
                     table += "  <td>" + data.revise_history[i].prj_wot_date, + "</td>";
+                    table += "  <td> <span class='label label-primary status' style='cursor: pointer;' parent='" + prj_id + "' prj_id='" + data.revise_history[i].prj_id + "'>" + data.revise_history[i].sta_name, + "</span></td>";
                     table += "  <td>" + check_null(data.revise_history[i].prj_version) + "</td>";
                     table += "  <td> ";
                     table += "      <i class='fa fa-fw fa-pencil-square-o get_quatation_prj' title ='Change detail' prj_id='" + data.revise_history[i].prj_id + "' style='cursor:pointer;'></i>";
@@ -298,7 +336,7 @@ $(document).on("click", ".duplicate", function(){
         "prj_id" : $(this).attr("prj_id")
     };
 
-    if(!alert("Are you want to create new revise?")){
+    if(confirm("Are you want to create new revise?")){
         $.post("C_project/api_create_new_revised", json, function(data){
             console.log(data);
             console.log("DATA : " + json.prj_id);
@@ -320,11 +358,14 @@ function load_hardware(json){
         if(data.hardware.length == 0){
 
             console.log("NO DATA");
-            table += "<tr><td colspan='9' align='center'> No data </td></tr>";
+            table += "<tr><td colspan='10' align='center'> No data </td></tr>";
         }else{
-            for(i=0;i<data.hardware.length;i++){
-
-                table += "<tr id='row_" + data.hardware[i].har_id + "'>";
+            var har_id = "";
+            limit = data.hardware.length;
+            for(i=0;i<limit;i++){
+                console.log("LOOP");
+                har_id = data.hardware[i].har_id;
+                table += "<tr id='row_" + har_id + "'>";
                 table += "  <td>" + (i+1) + "</td>";
                 table += "  <td>" + data.hardware[i].syt_name + "</td>";
                 table += "  <td>" + data.hardware[i].pro_model + "</td>";
@@ -332,10 +373,12 @@ function load_hardware(json){
                 table += "  <td>" + data.hardware[i].har_qty + "</td>";
                 table += "  <td>" + data.hardware[i].uni_name + "</td>";
                 table += "  <td>" + data.hardware[i].pro_price + "</td>";
-                table += "  <td>" + data.hardware[i].amount + "</td>";
+                table += "  <td>" + data.hardware[i].har_discount + "</td>";
+                table += "  <td>" + layor_discount(data.hardware[i].amount, data.hardware[i].har_discount) + "</td>";
                 table += '  <td>';
-                table += '      <i class="fa fa-fw fa-pencil-square-o edit" style="cursor:pointer" har_id="' + data.hardware[i].har_id + '" ></i>';
-                table += '      <i class="fa fa-fw fa-trash-o delete" style="cursor:pointer; color:red"  har_id="' + data.hardware[i].har_id + '"></i>';
+                table += '      <i class="fa fa-fw fa-pencil-square-o edit" style="cursor:pointer" har_id="' + har_id + '" ></i>';
+                table += '      <i class="fa fa-fw fa-trash-o delete" style="cursor:pointer; color:red" har_id="' + har_id + '"></i>';
+                table += '      <i class="fa fa-fw fa-tags discount" style="cursor:pointer; color:blue" har_id="' + har_id + '" section="hardware"></i>';
                 table += '  </td>';
                 table += "</tr>";
             }
@@ -354,21 +397,24 @@ function load_accessory(json){
         if(data.accessory.length == 0){
 
             console.log("NO DATA");
-            table += "<tr><td colspan='8' align='center'> No data </td></tr>";
+            table += "<tr><td colspan='9' align='center'> No data </td></tr>";
         }else{
+            var acc_id = 0;
             for(i=0;i<data.accessory.length;i++){
-
-                table += "<tr id='acc_row_" + data.accessory[i].acc_id + "'>";
+                acc_id = data.accessory[i].acc_id;
+                table += "<tr id='acc_row_" + acc_id + "'>";
                 table += "  <td>" + (i+1) + "</td>";
                 table += "  <td>" + data.accessory[i].pro_model + "</td>";
                 table += "  <td>" + data.accessory[i].pro_description + "</td>";
                 table += "  <td>" + data.accessory[i].acc_qty + "</td>";
                 table += "  <td>" + data.accessory[i].uni_name + "</td>";
                 table += "  <td>" + data.accessory[i].pro_price + "</td>";
-                table += "  <td>" + data.accessory[i].amount + "</td>";
+                table += "  <td>" + data.accessory[i].acc_discount + "</td>";
+                table += "  <td>" + layor_discount(data.accessory[i].amount, data.accessory[i].acc_discount) + "</td>";
                 table += '  <td>';
-                table += '      <i class="fa fa-fw fa-pencil-square-o acc_edit" style="cursor:pointer" acc_id="' + data.accessory[i].acc_id + '" ></i>';
-                table += '      <i class="fa fa-fw fa-trash-o acc_delete" style="cursor:pointer; color:red"  acc_id="' + data.accessory[i].acc_id + '"></i>';
+                table += '      <i class="fa fa-fw fa-pencil-square-o acc_edit" style="cursor:pointer" acc_id="' + acc_id + '" ></i>';
+                table += '      <i class="fa fa-fw fa-trash-o acc_delete" style="cursor:pointer; color:red"  acc_id="' + acc_id + '"></i>';
+                table += '      <i class="fa fa-fw fa-tags discount" style="cursor:pointer; color:blue" acc_id="' + acc_id + '" section="accessory"></i>';
                 table += '  </td>';
                 table += "</tr>";
             }
@@ -387,14 +433,27 @@ function load_service(json){
         if(data.length == 0){
 
             console.log("NO DATA");
-            table += "<tr><td colspan='4' align='center'> No data </td></tr>";
+            table += "<tr><td colspan='6' align='center'> No data </td></tr>";
         }else{
             for(i=0;i<data.length;i++){
 
                 table += "<tr id='sel_row_" + data[i].sel_id + "'>";
                 table += "  <td>" + (i+1) + "</td>";
-                table += "  <td>" + data[i].ser_name + "</td>";
-                table += "  <td>" + data[i].sel_ser_value + "</td>";
+
+                // check if other type
+                console.log("SER ID : " + data[i].sel_ser_id);
+                if(data[i].sel_ser_id == 99){
+                
+                    service_value = data[i].sel_ser_other;
+                }else{
+                
+                    service_value = data[i].ser_name;
+                }
+
+                table += "  <td>" + service_value + "</td>";
+                table += "  <td>" + data[i].sel_ser_price + "</td>";
+                table += "  <td>" + data[i].sel_ser_unit + "</td>";
+                table += "  <td>" + (data[i].sel_ser_unit * data[i].sel_ser_price) + "</td>";
                 table += '  <td>';
                 table += '      <i class="fa fa-fw fa-pencil-square-o sel_edit" style="cursor:pointer" sel_id="' + data[i].sel_id + '" ></i>';
                 table += '      <i class="fa fa-fw fa-trash-o sel_delete" style="cursor:pointer; color:red"  sel_id="' + data[i].sel_id + '"></i>';
@@ -407,7 +466,7 @@ function load_service(json){
 }
 
 function load_condition(json){
-    $.post("C_condition/api_get_condition_by_prj_id", json, function(data){
+    $.post("C_condition_log/api_get_condition_log_by_prj_id", json, function(data){
         
         var table = ""
         // Add data to table
@@ -422,10 +481,15 @@ function load_condition(json){
 
                 table += "<tr id='con_row_" + data[i].con_id + "'>";
                 table += "  <td>" + (i+1) + "</td>";
-                table += "  <td>" + data[i].con_value + "</td>";
+                if(data[i].con_id == 99){
+                    condition = data[i].col_con_other;
+                }else{
+                    condition = data[i].con_value;
+                }
+                table += "  <td>" + condition + "</td>";
                 table += '  <td>';
-                table += '      <i class="fa fa-fw fa-pencil-square-o con_edit" style="cursor:pointer" con_id="' + data[i].con_id + '" ></i>';
-                table += '      <i class="fa fa-fw fa-trash-o con_delete" style="cursor:pointer; color:red"  con_id="' + data[i].con_id + '"></i>';
+                table += '      <i class="fa fa-fw fa-pencil-square-o con_edit" style="cursor:pointer" con_id="' + data[i].col_id + '" ></i>';
+                table += '      <i class="fa fa-fw fa-trash-o con_delete" style="cursor:pointer; color:red"  con_id="' + data[i].col_id + '"></i>';
                 table += '  </td>';
                 table += "</tr>";
             }
@@ -435,9 +499,10 @@ function load_condition(json){
 }
 
 function load_scope_of_work(json){
-    $.post("C_scope_of_work/api_get_scope_of_work_by_prj_id", json, function(data){
+    $.post("C_scope_of_work_log/api_get_scope_of_work_log_by_prj_id", json, function(data){
         
-        var table = ""
+        var table = "";
+        var value = "";
         // Add data to table
         $("#sow_table tbody").html("");
         var table = "";
@@ -450,10 +515,16 @@ function load_scope_of_work(json){
 
                 table += "<tr id='sow_row_" + data[i].sow_id + "'>";
                 table += "  <td>" + (i+1) + "</td>";
-                table += "  <td>" + data[i].sow_value + "</td>";
+
+                if(data[i].sol_sow_id == 99){
+                   value = data[i].sol_sow_other; 
+                }else{
+                   value = data[i].sow_value;
+                }
+                table += "  <td>" + value + "</td>";
                 table += '  <td>';
-                table += '      <i class="fa fa-fw fa-pencil-square-o sow_edit" style="cursor:pointer" sow_id="' + data[i].sow_id + '" ></i>';
-                table += '      <i class="fa fa-fw fa-trash-o sow_delete" style="cursor:pointer; color:red"  sow_id="' + data[i].sow_id + '"></i>';
+                table += '      <i class="fa fa-fw fa-pencil-square-o sow_edit" style="cursor:pointer" sow_id="' + data[i].sol_id + '" ></i>';
+                table += '      <i class="fa fa-fw fa-trash-o sow_delete" style="cursor:pointer; color:red"  sow_id="' + data[i].sol_id + '"></i>';
                 table += '  </td>';
                 table += "</tr>";
             }
@@ -468,7 +539,7 @@ $(document).on("click", ".get_quatation_prj", function(){
     };
 
     // local storage
-    localStorage.setItem("prj_id", json.prj_id);
+    localStorage.setItem("prj_id", $(this).attr("prj_id"));
 
     // Show element
     $(".tab_empty").hide();
@@ -492,6 +563,12 @@ $(document).on("click", ".get_quatation_prj", function(){
     // Scope of work
     load_scope_of_work(json);
 
+    // Load discount
+    $.post("C_project/api_get_project_by_id", json, function(data){
+
+        $("#discount").val(data.project[0].prj_discount);
+    },"json");
+
     // Quatation information
     $.post("C_quatation_mm/cost_monitor", json, function(data){
        
@@ -505,9 +582,9 @@ $(document).on("click", ".get_quatation_prj", function(){
     },"json");
 
     // Load system type 
-    var json = {
-        "prj_id" : localStorage.getItem("revised_prj_id")
-    };
+    // var json = {
+    //     "prj_id" : localStorage.getItem("revised_prj_id")
+    // };
     $.post("C_system_log/api_get_system_log_by_prj_id", json, function(data){
    
         var option = "";
@@ -525,6 +602,27 @@ $(document).on("click", ".get_quatation_prj", function(){
     // Define cost monitor
     $("#over_head").prop("disabled", false);
     get_cost();
+
+    // Load vat
+    // var json = {
+    //     "prj_id" :  localStorage.getItem("revised_prj_id")
+    // }
+    $.post("C_project/api_get_vat_by_prj_id", json, function(resp){
+
+        $("#vat").val(resp[0].prj_vat);
+    },"json");
+});
+
+// Update vat
+$("#vat").change(function(){
+    var vat = $(this).val();
+    var json = {
+        "prj_vat" : vat,
+        "prj_id" : localStorage.getItem("prj_id")
+    };
+    $.post("C_project/api_change_vat", json, function(resp){
+
+    },"json");
 });
 
 // Cost monitor
@@ -786,6 +884,81 @@ $("#confirm_acc_delete").click(function(){
     
 });
 
+//#####################
+// Discount
+//####################
+$(document).on("click", ".discount", function(){
+
+    var section = $(this).attr("section");
+    if(section == "hardware"){
+
+        var har_id = $(this).attr("har_id");
+        localStorage.setItem("har_id", har_id);
+        localStorage.setItem("section", section);
+        // get data
+        var json = {
+            "har_id" : har_id
+        };
+        $.post("C_hardware/api_get_discount", json, function(resp){
+
+            // This point continue value not set to textbox
+
+            $("#har_discount").val(resp[0].har_discount);
+        },"json");
+    }else{
+
+        var acc_id = $(this).attr("acc_id");
+        localStorage.setItem("acc_id", acc_id);
+        localStorage.setItem("section", section);
+        // get data
+        var json = {
+            "acc_id" : acc_id
+        };
+        $.post("C_accessory/api_get_discount", json, function(resp){
+
+            // This point continue value not set to textbox
+
+            $("#har_discount").val(resp[0].acc_discount);
+        },"json");
+    }
+
+    $("#modal-discount").modal("show");
+});
+
+$("#discount_update_btn").click(function(){
+    var section = localStorage.getItem("section");
+    var prj_id = localStorage.getItem("prj_id");
+
+    if(section == "hardware"){
+        var har_id = localStorage.getItem("har_id");
+        var har_discount = $("#har_discount").val();
+        // Clean space
+        har_discount = har_discount.replace(/ /g,'');
+        var json = {
+            "har_id" : har_id,
+            "har_discount" : har_discount
+        }
+        $.post("C_hardware/api_set_discount", json, function(resp){
+
+            load_hardware({"prj_id" : prj_id}) ;
+        });
+    }else{
+        var acc_id = localStorage.getItem("acc_id");
+        var acc_discount = $("#har_discount").val();
+        // Clean space
+        acc_discount = acc_discount.replace(/ /g,'');
+        var json = {
+            "acc_id" : acc_id,
+            "acc_discount" : acc_discount
+        }
+        $.post("C_accessory/api_set_discount", json, function(resp){
+
+            load_accessory({"prj_id" : prj_id});
+        });    
+    }
+    // Save data
+});
+
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // Service
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -796,13 +969,20 @@ $("#confirm_acc_delete").click(function(){
 $("#add_services_btn").click(function(){
     var prj_id = localStorage.getItem("prj_id");
     var ser_id = $("#service_list").val();
-    var sel_value = $("#service_value").val();
+    var sel_price = $("#service_price").val();
+    var sel_unit = $("#service_unit").val();
 
     var json = {
         "sel_prj_id" : prj_id,
         "sel_ser_id" : ser_id,
-        "sel_ser_value" : sel_value
+        "sel_ser_price" : sel_price,
+        "sel_ser_unit" : sel_unit
     }
+    if(ser_id == 99){
+        ser_value = $("#service_other").val();
+        json.sel_ser_other = ser_value;
+    }
+    console.log(json);
     $.post("C_service_log/api_insert_service_log", json, function(data){
         var json_a = {
             "prj_id" : prj_id
@@ -895,23 +1075,37 @@ $("#confirm_sel_delete").click(function(){
     
 });
 
+// Other case
+$(".service_list").change(function(){
+    var value = $(this).val();
+    console.log(value);
+    if(value == 99){
+        $("#serivce_other_div").show();
+    }else{
+        $("#serivce_other_div").hide();
+    }
+});
+
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // Payment Condition
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 //####################
-// Add service 
+// Add condition 
 //####################
 $("#add_condition").click(function(){
     var prj_id = localStorage.getItem("prj_id");
-    var con_value = $("#con_value").val();
+    var con_id = $("#condition_list").val();
 
 
     var json = {
-        "con_prj_id" : prj_id,
-        "con_value" : con_value
+        "col_prj_id" : prj_id,
+        "col_con_id" : con_id
     }
-    $.post("C_condition/api_insert_condition", json, function(data){
+    if(con_id == 99){
+        json.col_con_other = $("#col_con_other").val();
+    }
+    $.post("C_condition_log/api_insert_condition_log", json, function(data){
         var json_a = {
             "prj_id" : prj_id
         }
@@ -921,20 +1115,40 @@ $("#add_condition").click(function(){
 });
 
 //####################
-// Edit Accessory Product
+// Edit condition
 //####################
 $(document).on("click", ".con_edit", function(){
     
-    localStorage.setItem("edit_con_id", $(this).attr("con_id"));
+    localStorage.setItem("edit_col_id", $(this).attr("con_id"));
+    //localStorage.setItem("edit_col_con_id", 0);
+    //localStorage.setItem("edit_col_other", 0);
 
     var json = {
-        "con_id" : $(this).attr("con_id")
+        "col_id" : $(this).attr("con_id")
     }
 
-    $.post("C_condition/api_get_condition_by_con_id", json, function(data){
+    $.post("C_condition_log/api_get_condition_log_by_col_id", json, function(data){
 
-        console.log(data.condition[0].con_value);
-        $("#con_value_edit").val(data.condition[0].con_value);
+        var value = "";
+        $("#col_con_id").val(data.condition_log[0].col_con_id);
+        localStorage.setItem("edit_col_con_id", data.condition_log[0].col_con_id);
+
+        // other case 
+        if(data.condition_log[0].col_con_id == 99){
+
+           value = data.condition_log[0].col_con_other;
+           $("#col_con_other_edit").val(value);
+           $("#condition_other_div_edit").show();
+
+           // Set status
+           localStorage.setItem("edit_col_other", 1);
+           localStorage.setItem("edit_col_other_value", value);
+        }else{
+
+           $("#col_con_other_edit").val("");
+           $("#condition_other_div_edit").hide();
+        }
+
         get_cost();
     },"json");
 
@@ -943,35 +1157,26 @@ $(document).on("click", ".con_edit", function(){
     
 $("#con_update_btn").click(function(){
 
-    var con_id = localStorage.getItem("edit_con_id");
+    var col_id = localStorage.getItem("edit_col_id");
     var prj_id = localStorage.getItem("prj_id");
+    var col_con_id = $("#col_con_id").val() 
+    var col_con_other = $("#col_con_other_edit").val();
+
     var json = {
-        "con_id" : con_id,
-        "con_value" : $("#con_value_edit").val()
+        "col_id" : col_id,
+        "col_con_id" : col_con_id
     }
-    $.post("C_condition/api_update_condition", json, function(data){
 
-        var row = "";
-        row += "  <td></td>";
-        row += "  <td>" + data.condition[0].con_value + "</td>";
-        row += '  <td>';
-        row += '      <i class="fa fa-fw fa-pencil-square-o con_edit" style="cursor:pointer" con_id="' + data.condition[0].con_id + '" ></i>';
-        row += '      <i class="fa fa-fw fa-trash-o con_delete" style="cursor:pointer; color:red"  con_id="' + data.condition[0].con_id + '"></i>';
-        row += '  </td>';
+    // other case
+    if(col_con_id == 99){
 
-        $("#con_row_" + data.condition[0].con_id).html(row);
+        json.col_con_other = col_con_other;
+    }
+    $.post("C_condition_log/api_update_condition_log", json, function(data){
 
-        // New index
-        var index = 1;
-        $("#condition_table tbody tr").each(function(){
-            $(this).find("td:first").text(index++); //put elements into array
-        });
-
-        $("#modal-con-edit").modal("hide");
-
+        load_condition({"prj_id" : prj_id});
         get_cost();
     },'json');
-
 });
 
 //####################
@@ -987,25 +1192,30 @@ $(document).on("click", ".con_delete", function(){
     
 $("#confirm_con_delete").click(function(){
 
+    var prj_id = localStorage.getItem("prj_id");
     var json = {
-        "con_id" : $(this).attr("con_id")
+        "col_id" : $(this).attr("con_id")
     }
 
-    $.post("C_condition/api_delete_condition", json, function(){
+    $.post("C_condition_log/api_delete_condition_log", json, function(){
 
+        load_condition({"prj_id":prj_id});
         get_cost();
     },"json");
-    $("#con_row_" + json.con_id).remove();
-
-    // New index
-    var index = 1;
-    $("#condition_table tbody tr").each(function(){
-        $(this).find("td:first").text(index++); //put elements into array
-    });
-    $("#modal-con-delete").modal("hide");
     
 });
 
+
+// Other case
+$(".condition_list").change(function(){
+    var value = $(this).val();
+    console.log(value);
+    if(value == 99){
+        $(".condition_other_div").show();
+    }else{
+        $(".condition_other_div").hide();
+    }
+});
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //Scope of work
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1015,18 +1225,19 @@ $("#confirm_con_delete").click(function(){
 //####################
 $("#add_sow_btn").click(function(){
     var prj_id = localStorage.getItem("prj_id");
-    var con_value = $("#sow_value").val();
+    var sol_sow_id = $("#sol_sow_id").val();
 
 
     var json = {
-        "sow_prj_id" : prj_id,
-        "sow_value" : con_value
+        "sol_prj_id" : prj_id,
+        "sol_sow_id" : sol_sow_id
     }
-    $.post("C_scope_of_work/api_insert_scope_of_work", json, function(data){
-        var json_a = {
-            "prj_id" : prj_id
-        }
-        load_scope_of_work(json_a);
+    if(sol_sow_id == 99){
+        json.sol_sow_other = $("#sol_sow_other").val();
+    }
+    $.post("C_scope_of_work_log/api_insert_scope_of_work_log", json, function(data){
+
+        load_scope_of_work({ "prj_id" : prj_id});
         get_cost();
     },"json");
 });
@@ -1036,17 +1247,24 @@ $("#add_sow_btn").click(function(){
 //####################
 $(document).on("click", ".sow_edit", function(){
     
-    localStorage.setItem("edit_sow_id", $(this).attr("sow_id"));
+    localStorage.setItem("edit_sol_id", $(this).attr("sow_id"));
 
     var json = {
-        "sow_id" : $(this).attr("sow_id")
+        "sol_id" : $(this).attr("sow_id"),
     }
 
-    $.post("C_scope_of_work/api_get_scope_of_work_by_sow_id", json, function(data){
+    $.post("C_scope_of_work_log/api_get_scope_of_work_log_by_sol_id", json, function(data){
 
         //console.log(data.condition[0].con_value);
-        $("#sow_value_edit").val(data.scope_of_work[0].sow_value);
+        $("#sol_sow_id_edit").val(data.scope_of_work[0].sow_id);
+        if(data.scope_of_work[0].sow_id == 99){
 
+            $("#scope_of_work_div_edit").show();
+            $("#sol_sow_other_edit").val(data.scope_of_work[0].sol_sow_other);
+        }else{
+
+            $("#scope_of_work_div_edit").hide();
+        }
         get_cost();
     },"json");
 
@@ -1055,71 +1273,67 @@ $(document).on("click", ".sow_edit", function(){
     
 $("#sow_update_btn").click(function(){
 
-    var sow_id = localStorage.getItem("edit_sow_id");
+    var sol_id = localStorage.getItem("edit_sol_id");
     var prj_id = localStorage.getItem("prj_id");
+    var sol_sow_id = $("#sol_sow_id_edit").val();
+    var sol_sow_other = $("#sol_sow_other_edit").val();
+
     var json = {
-        "sow_id" : sow_id,
-        "sow_value" : $("#sow_value_edit").val()
+        "sol_id" : sol_id,
+        "sol_sow_id" : sol_sow_id,
     }
-    $.post("C_scope_of_work/api_update_scope_of_work", json, function(data){
 
-        var row = "";
-        row += "  <td></td>";
-        row += "  <td>" + data.scope_of_work[0].sow_value + "</td>";
-        row += '  <td>';
-        row += '      <i class="fa fa-fw fa-pencil-square-o sow_edit" style="cursor:pointer" sow_id="' + data.scope_of_work[0].sow_id + '" ></i>';
-        row += '      <i class="fa fa-fw fa-trash-o sow_delete" style="cursor:pointer; color:red"  sow_id="' + data.scope_of_work[0].sow_id + '"></i>';
-        row += '  </td>';
+    if(sol_sow_id == 99){
+        json.sol_sow_other = sol_sow_other;
+    }
 
-        $("#sow_row_" + data.scope_of_work[0].sow_id).html(row);
+    console.log(json);
+    $.post("C_scope_of_work_log/api_update_scope_of_work_log", json, function(data){
 
-        // New index
-        var index = 1;
-        $("#sow_table tbody tr").each(function(){
-            $(this).find("td:first").text(index++); //put elements into array
-        });
-
-        $("#modal-sow-edit").modal("hide");
-
+        load_scope_of_work({"prj_id" : prj_id});
         get_cost();
     },'json');
 
 });
 
 //####################
-// Remove Condition Product
+// Remove scope of work 
 //####################
 $(document).on("click", ".sow_delete", function(){
     
 
-    var sel_id = $(this).attr("sow_id");
-    $("#confirm_sow_delete").attr("sow_id", sel_id);
+    var sol_id = $(this).attr("sow_id");
+    $("#confirm_sow_delete").attr("sow_id", sol_id);
     $("#modal-sow-delete").modal("show");
 });
 
 
 $("#confirm_sow_delete").click(function(){
 
+    var prj_id = localStorage.getItem("prj_id");
     var json = {
-        "sow_id" : $(this).attr("sow_id")
+        "sol_id" : $(this).attr("sow_id")
     }
 
-    $.post("C_scope_of_work/api_delete_scope_of_work", json, function(){
+    $.post("C_scope_of_work_log/api_delete_scope_of_work_log", json, function(){
 
+        load_scope_of_work({"prj_id" : prj_id})
         get_cost();
     },"json");
-    $("#sow_row_" + json.sow_id).remove();
-
-    // New index
-    var index = 1;
-    $("#sow_table tbody tr").each(function(){
-        $(this).find("td:first").text(index++); //put elements into array
-    });
     $("#modal-sow-delete").modal("hide");
     
 });
 
-
+// Other case
+$(".work_list").change(function(){
+    var value = $(this).val();
+    console.log(value);
+    if(value == 99){
+        $(".scope_of_work_div").show();
+    }else{
+        $(".scope_of_work_div").hide();
+    }
+});
 
 //########################
 // PDF Generate
@@ -1183,6 +1397,43 @@ $("#confitm_add_product_set").click(function(){
     $("#modal-item-set").modal("hide");
 });
 
+//#########################
+// Change status
+//#########################
+
+// Load status
+$.post("C_status/api_get_status", "", function(resp){
+    var option = "";
+    for(i=0;i<resp.length;i++){
+        option += "<option value='" + resp[i].sta_id + "'>" + resp[i].sta_name + "</option>";
+    }
+    console.log(option);
+    $("#status_list").html(option);
+},'json');
+
+$(document).on("click", ".status", function(){
+ 
+    console.log("STATUS");
+    localStorage.setItem("rev_prj_id", $(this).attr("prj_id"));
+    localStorage.setItem("parent", $(this).attr("parent"));
+    $("#modal-sta-edit").modal("show"); 
+});
+
+
+$("#sta_update_btn").click(function(){
+    var json = {
+        "prj_id" : localStorage.getItem("rev_prj_id"),
+        "prj_sta_id" : $("#status_list").val()
+    }
+    var prj_id = localStorage.getItem("parent"); 
+    console.log(prj_id);
+    $.post("C_project/api_change_status", json, function(resp){
+        load_revised(prj_id);
+    });
+});
+
+
+
 function check_null(str){
     if(str){
         return str;
@@ -1220,3 +1471,12 @@ function get_cost(){
     },"json");
 }
 
+function layor_discount(amount, discount){
+    //debugger;
+    var discount_list = discount.split("+");
+
+    for(j=0;j<discount_list.length;j++){
+        amount -= (amount * discount_list[j]) / 100;
+    }
+    return amount;
+}

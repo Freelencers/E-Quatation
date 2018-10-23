@@ -17,19 +17,11 @@
          <div class="form-group">
             <label>Month</label>
             <select class="form-control" name="fol_month" id="fol_month">
-				<option value='' selected>All Month</option>
-				<option value='01'>Janaury</option>
-				<option value='02'>February</option>
-				<option value='03'>March</option>
-				<option value='04'>April</option>
-				<option value='05'>May</option>
-				<option value='06'>June</option>
-				<option value='07'>July</option>
-				<option value='08'>August</option>
-				<option value='09'>September</option>
-				<option value='10'>October</option>
-				<option value='11'>November</option>
-				<option value='12'>December</option>
+							<option value='' selected>All Month</option>
+							<option value='1'>Period 01</option>
+							<option value='2'>Period 02</option>
+							<option value='3'>Period 03</option>
+							<option value='4'>Period 04</option>
             </select>
           </div>
           <div class="form-group">
@@ -73,6 +65,10 @@
 		<div class="box-header with-border">
 			<h3 class="box-title">Follow up warning log</h3>
 			<div class="box-tools">
+					<div class="btn btn-primary" id="export">
+						<i class="fa fa-fw fa-file-excel-o"></i>
+						Export
+					</div>
 			</div>
 		</div>
 		<div class="box-header">
@@ -87,7 +83,7 @@
 					<th>No.</th>
 					<th>First Name</th>
 					<th>Last Name</th>
-					<th style="width:19%">Number of Project</th>
+					<th style="width:19%">Follow up missing</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -119,7 +115,7 @@ $("#fol_year").append(option);
 $("#btn_search").click(function(){
 	var year = $("#fol_year").val();
 	var month = $("#fol_month").val();
-	load_data(year, month);
+	load_data(month, year);
 })
 
 load_data();
@@ -194,6 +190,13 @@ function load_data(month="", year=""){
 		$("#data_table tbody").html(table);
 	}, "json");
 }
+
+$("#export").click(function(){
+
+	var year = $("#fol_year").val();
+	var period = $("#fol_month").val();
+	window.location.href = "C_generate_excel/follow_up/" + period + "/" + year;
+});
 
 
 </script>

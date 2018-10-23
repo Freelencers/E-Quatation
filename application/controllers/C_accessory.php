@@ -75,4 +75,18 @@ class C_accessory extends CI_Controller{
 		$result["accessory"] = $this->M_accessory->get_accessory_by_acc_id($row["acc_id"]);
 		echo json_encode($result);
 	}
+
+	public function api_get_discount(){
+		$data = $this->input->post();
+		$result = $this->M_accessory->get_discount($data["acc_id"]);
+		echo json_encode($result);
+	}
+
+	public function api_set_discount(){
+		$data = $this->input->post();
+		$result = $this->M_accessory->set_discount($data);
+
+		$resp["status"] = 1;
+		echo json_encode($resp);
+	}
 }

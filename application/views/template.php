@@ -168,7 +168,7 @@
           </li>
           <li>
             <a href="<?= base_url('index.php/C_quatation_mm');?>">
-              <i class="fa fa-file"></i> <span>Quatation</span>
+              <i class="fa fa-file"></i> <span>Quotation</span>
             </a>
           </li>
           <li>
@@ -189,7 +189,7 @@
               </span>
             </a>
             <ul class="treeview-menu">
-              <li><a href="<?= base_url('index.php/C_report_all_project'); ?>"><i class="fa fa-circle-o"></i>Incom Report</a></li>
+              <li><a href="<?= base_url('index.php/C_report_all_project'); ?>"><i class="fa fa-circle-o"></i>Income Report</a></li>
               <li><a href="<?= base_url('index.php/C_report_follow_up'); ?>"><i class="fa fa-circle-o"></i>Follow up Report</a></li>
             </ul>
           </li>

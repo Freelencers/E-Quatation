@@ -22,6 +22,11 @@ class M_service_log extends CI_Model{
 	public function insert_service_log($data){
 
 		$this->db->insert("service_log", $data);
+		if($data["sel_ser_id"] == 99){
+
+			$temp["ser_name"] = $data["sel_ser_other"];
+			$this->db->insert("services", $temp);
+		}
 		if($this->db->affected_rows() > 0)
 		{
 			// Code here after successful insert
@@ -41,7 +46,7 @@ class M_service_log extends CI_Model{
 	}
 
 	public function get_service_log_by_prj_id($prj_id){
-		$this->db->select("sel_id, ser_name, sel_ser_value")
+		$this->db->select("sel_id, sel_ser_id, ser_name, sel_ser_price, sel_ser_unit, sel_ser_other")
 		->from("service_log")
 		->join("services", "ser_id = sel_ser_id")
 		->where("sel_prj_id", $prj_id)

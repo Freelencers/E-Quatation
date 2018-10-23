@@ -33,7 +33,7 @@
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href="../index2.html"><b>OTEC</b> Supply</a>
+    <a href="../index2.html" class="text-blue"><b class="text-blue">OTEC</b> Supply</a>
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">

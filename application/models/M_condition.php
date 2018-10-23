@@ -19,50 +19,58 @@ class M_condition extends CI_Model{
 	 * @see https://codeigniter.com/user_guide/general/urls.html
 	 */
 	
-	public function insert_condition($data){
-
-		$this->db->insert('condition', $data);
-		if($this->db->affected_rows() > 0)
-		{
-			// Codhere after successful insert
-			return true; // to the controller
-		}
-	}
-
-	public function get_last_condition(){
+	public function get_condition(){
 		$this->db->select("*")
 		->from("condition")
-		->order_by("con_id", "desc")
-		->limit(1);
-
-		return $this->db->get()->result();
+		->order_by("con_id", "ASC");
+		
+		return $this->db->get();
 	}
 
-	public function get_condition_by_prj_id($prj_id){
-		$this->db->select("*")
-		->from("condition")
-		->where("con_prj_id", $prj_id)
-		->order_by("con_id", "DESC");;
+	// public function insert_condition($data){
 
-		return $this->db->get()->result();
-	}
+	// 	$this->db->insert('condition', $data);
+	// 	if($this->db->affected_rows() > 0)
+	// 	{
+	// 		// Codhere after successful insert
+	// 		return true; // to the controller
+	// 	}
+	// }
 
-	public function get_condition_by_con_id($con_id){
-		$this->db->select("*")
-		->from("condition")
-		->where("con_id", $con_id);
+	// public function get_last_condition(){
+	// 	$this->db->select("*")
+	// 	->from("condition")
+	// 	->order_by("con_id", "desc")
+	// 	->limit(1);
 
-		return $this->db->get()->result();
-	}
+	// 	return $this->db->get()->result();
+	// }
 
-	public function update_condition($data){
-		$this->db->where("con_id", $data["con_id"])
-		->update("condition", $data);
-	}
+	// public function get_condition_by_prj_id($prj_id){
+	// 	$this->db->select("*")
+	// 	->from("condition")
+	// 	->where("con_prj_id", $prj_id)
+	// 	->order_by("con_id", "DESC");;
 
-	public function delete_condition($con_id){
+	// 	return $this->db->get()->result();
+	// }
+
+	// public function get_condition_by_con_id($con_id){
+	// 	$this->db->select("*")
+	// 	->from("condition")
+	// 	->where("con_id", $con_id);
+
+	// 	return $this->db->get()->result();
+	// }
+
+	// public function update_condition($data){
+	// 	$this->db->where("con_id", $data["con_id"])
+	// 	->update("condition", $data);
+	// }
+
+	// public function delete_condition($con_id){
 	
-		$this->db->where("con_id", $con_id)
-		->delete("condition");
-	}
+	// 	$this->db->where("con_id", $con_id)
+	// 	->delete("condition");
+	// }
 }

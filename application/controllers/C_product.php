@@ -82,11 +82,13 @@ class C_product extends CI_Controller{
 				$row["pro_pic"] = $upload_data["upload_data"]["file_name"];
 				$result = $this->M_product->insert_product($row);
 
-				
 				if($result){
 					$row = $this->M_product->get_last_product();
 					$data["product"] = $row->result();
 					$data["last_index"] = $this->M_product->get_product()->num_rows();
+
+					// Log
+					action_log("Insert product  model:".$data["product"][0]->pro_model." id:".$data["product"][0]->pro_id." detail :".json_encode($data["product"][0]));
 
 					$data["status"] = 1;
 					$data["msg"] = "Insert complete";
@@ -109,6 +111,9 @@ class C_product extends CI_Controller{
 				$data["product"] = $row->result();
 				$data["last_index"] = $this->M_product->get_product()->num_rows();
 
+				// Log
+				action_log("Insert product  model:".$data["product"][0]->pro_model." id:".$data["product"][0]->pro_id." detail :".json_encode($data["product"][0]));
+
 				$data["status"] = 1;
 				$data["msg"] = "Insert complete";
 				
@@ -127,6 +132,9 @@ class C_product extends CI_Controller{
 		
 		$data = $this->input->post();
 		$result = $this->M_product->delete_product($data);
+
+		// Log
+		action_log("Delete product id:".$data["pro_id"]);
 
 		if($result){
 			
@@ -169,6 +177,9 @@ class C_product extends CI_Controller{
 				$row["pro_pic"] = $upload_data["upload_data"]["file_name"];
 				$result = $this->M_product->update_product($row);
 
+				// Log
+				action_log("Update product  model:".$data["product"][0]->pro_model." id:".$data["product"][0]->pro_id." detail :".json_encode($data["product"][0]));
+
 				
 				if($result){
 					$row = $this->M_product->get_product_by_id($row);
@@ -194,6 +205,8 @@ class C_product extends CI_Controller{
 			$row = $this->M_product->get_product_by_id($row);
 			$data["product"] = $row->result();
 			$data["last_index"] = $this->M_product->get_product()->num_rows();
+
+			action_log("Update product  model:".$data["product"][0]->pro_model." id:".$data["product"][0]->pro_id." detail :".json_encode($data["product"][0]));
 
 			$data["status"] = 1;
 			$data["msg"] = "Insert complete";

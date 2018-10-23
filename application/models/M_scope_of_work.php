@@ -19,50 +19,58 @@ class M_scope_of_work extends CI_Model{
 	 * @see https://codeigniter.com/user_guide/general/urls.html
 	 */
 	
-	public function insert_scope_of_work($data){
+	// public function insert_scope_of_work($data){
 
-		$this->db->insert('scope_of_work', $data);
-		if($this->db->affected_rows() > 0)
-		{
-			// Codhere after successful insert
-			return true; // to the sowtroller
-		}
-	}
+	// 	$this->db->insert('scope_of_work', $data);
+	// 	if($this->db->affected_rows() > 0)
+	// 	{
+	// 		// Codhere after successful insert
+	// 		return true; // to the sowtroller
+	// 	}
+	// }
 
-	public function get_last_scope_of_work(){
-		$this->db->select("*")
-		->from("scope_of_work")
-		->order_by("sow_id", "desc")
-		->limit(1);
+	// public function get_last_scope_of_work(){
+	// 	$this->db->select("*")
+	// 	->from("scope_of_work")
+	// 	->order_by("sow_id", "desc")
+	// 	->limit(1);
 
-		return $this->db->get()->result();
-	}
+	// 	return $this->db->get()->result();
+	// }
 
-	public function get_scope_of_work_by_prj_id($prj_id){
-		$this->db->select("*")
-		->from("scope_of_work")
-		->where("sow_prj_id", $prj_id)
-		->order_by("sow_id", "DESC");
+	// public function get_scope_of_work_by_prj_id($prj_id){
+	// 	$this->db->select("*")
+	// 	->from("scope_of_work")
+	// 	->where("sow_prj_id", $prj_id)
+	// 	->order_by("sow_id", "DESC");
 
-		return $this->db->get()->result();
-	}
+	// 	return $this->db->get()->result();
+	// }
 
-	public function get_scope_of_work_by_sow_id($sow_id){
-		$this->db->select("*")
-		->from("scope_of_work")
-		->where("sow_id", $sow_id);
+	// public function get_scope_of_work_by_sow_id($sow_id){
+	// 	$this->db->select("*")
+	// 	->from("scope_of_work")
+	// 	->where("sow_id", $sow_id);
 
-		return $this->db->get()->result();
-	}
+	// 	return $this->db->get()->result();
+	// }
 
-	public function update_scope_of_work($data){
-		$this->db->where("sow_id", $data["sow_id"])
-		->update("scope_of_work", $data);
-	}
+	// public function update_scope_of_work($data){
+	// 	$this->db->where("sow_id", $data["sow_id"])
+	// 	->update("scope_of_work", $data);
+	// }
 
-	public function delete_scope_of_work($sow_id){
+	// public function delete_scope_of_work($sow_id){
 	
-		$this->db->where("sow_id", $sow_id)
-		->delete("scope_of_work");
+	// 	$this->db->where("sow_id", $sow_id)
+	// 	->delete("scope_of_work");
+	// }
+
+	public function get_scope_of_work(){
+
+		$this->db->select("*")
+		->from("scope_of_work");
+
+		return $this->db->get();
 	}
 }

@@ -52,6 +52,7 @@
                 <tr>
                 <th>No.</th>
                 <th>Create</th>
+                <th>Status</th>
                 <th>Version</th>
                 <th>Edit</th>
                 </tr>
@@ -59,7 +60,7 @@
             <tbody>
             </tbody>
               <tr>
-                <td colspan="4">Please select project</td>
+                <td colspan="5">Please select project</td>
                </tr>
             </table>
         </div>
@@ -168,6 +169,13 @@
                         <label>Recive Profit</label>
                         <div class="input-group">
                           <input type="text" class="form-control" id="final_profit" maxlength="2" value="0" disabled>
+                          <span class="input-group-addon">THB</span>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label>Commission</label>
+                        <div class="input-group">
+                          <input type="text" class="form-control" id="commission" maxlength="2" value="0" disabled>
                           <span class="input-group-addon">THB</span>
                         </div>
                       </div>
@@ -297,6 +305,7 @@
                 <th>Quantity</th>
                 <th>Unit</th>
                 <th>Unit Price</th>
+                <th>Discount</th>
                 <th>Amount</th>
                 <th>Operation</th>
                 </tr>
@@ -307,8 +316,12 @@
             </table> 
             <div class="box-footer">
                 <div class="col-lg-2 pull-right">
-                <label> Discount </label>
+                <label> Discount (%)</label>
                 <input type="number" class="form-control" step="1" min="1" id="discount" value="0">
+                </div>
+                <div class="col-lg-2 pull-right">
+                <label> Vat (%) </label>
+                <input type="number" class="form-control" step="1" min="1" id="vat" value="0">
                 </div>
             </div>
             </div>
@@ -353,6 +366,7 @@
                 <th>Quantity</th>
                 <th>Unit</th>
                 <th>Unit Price</th>
+                <th>Discount</th>
                 <th>Amount</th>
                 <th>Operation</th>
                 </tr>
@@ -370,8 +384,16 @@
                 <button type="button" class="btn btn-block btn-primary" id="add_services_btn"><i class="fa fa-fw fa-plus"></i> Add</button>
                 </div>
                 <div class="col-lg-2 pull-right">
-                <label>Value</label>
-                <input type="text" class="form-control" step="1" min="1" id="service_value">
+                <label>Unit</label>
+                <input type="text" class="form-control" step="1" min="1" id="service_unit">
+                </div>
+                <div class="col-lg-2 pull-right">
+                <label>Price</label>
+                <input type="text" class="form-control" step="1" min="1" id="service_price">
+                </div>
+                <div class="col-lg-2 pull-right" style="display:none" id="serivce_other_div">
+                <label>Detail</label>
+                <input type="text" class="form-control" step="1" min="1" id="service_other">
                 </div>
                 <div class="col-lg-4 pull-right">
                 <label>Service</label>
@@ -386,7 +408,9 @@
                 <tr>
                 <th>No.</th>
                 <th>Service</th>
-                <th>Value</th>
+                <th>Price</th>
+                <th>Unit</th>
+                <th>Amount</th>
                 <th>Operation</th>
                 </tr>
                 </thead>
@@ -402,9 +426,15 @@
                 <label> &nbsp </label>
                 <button type="button" class="btn btn-block btn-primary" data-toggle="modal" data-target="#modal-success" id="add_condition"><i class="fa fa-fw fa-plus"></i> Add</button>
                 </div>
+                <div class="col-lg-4 pull-right condition_other_div" style="display: none">
+                <label>Other</label>
+                <input type="text" class="form-control" id="col_con_other">
+                </div>
                 <div class="col-lg-4 pull-right">
                 <label>Condition</label>
-                <input type="text" class="form-control" id="con_value">
+                <select class="form-control condition_list" id="condition_list">
+                    <!-- service list -->
+                </select>
                 </div>
                 <!-- /btn-group -->
             </div>
@@ -426,9 +456,15 @@
                 <label> &nbsp </label>
                 <button type="button" class="btn btn-block btn-primary" data-toggle="modal" data-target="#modal-success" id="add_sow_btn"><i class="fa fa-fw fa-plus"></i> Add</button>
                 </div>
+                <div class="col-lg-4 pull-right scope_of_work_div" style="display :none">
+                <label>Detail</label>
+                <input type="text" class="form-control" id="sol_sow_other">
+                </div>
                 <div class="col-lg-4 pull-right">
                 <label>Work</label>
-                <input type="text" class="form-control" id="sow_value">
+                <select class="work_list form-control" id="sol_sow_id">
+                  <!-- work list -->
+                </select>
                 </div>
                 <!-- /btn-group -->
             </div>
@@ -607,6 +643,39 @@
 </div>
 <!-- /.modal -->
 
+<!-- Scope of work -->
+<div class="modal fade" id="modal-sow-edit">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Edit Product</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Scope of work</label>
+          <select class="work_list form-control" id="sol_sow_id_edit">
+            <!-- condition list -->
+          </select>
+        </div>
+
+        <div class="form-group scope_of_work_div" id="scope_of_work_div_edit" style="display: none">
+          <label>Detail</label>
+          <input type="text" id="sol_sow_other_edit" class="form-control">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="sow_update_btn" data-dismiss="modal">Save</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
 <!-- Condition -->
 <div class="modal fade" id="modal-con-edit">
   <div class="modal-dialog">
@@ -619,12 +688,19 @@
       <div class="modal-body">
         <div class="form-group">
           <label>Condition</label>
-          <input type="text" class="form-control" id="con_value_edit">
+          <select class="condition_list form-control" id="col_con_id">
+            <!-- condition list -->
+          </select>
+        </div>
+
+        <div class="form-group condition_other_div" id="condition_other_div_edit" style="display: none">
+          <label>Detail</label>
+          <input type="text" id="col_con_other_edit" class="form-control">
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="con_update_btn">Save</button>
+        <button type="button" class="btn btn-primary" id="con_update_btn" data-dismiss="modal">Save</button>
       </div>
     </div>
     <!-- /.modal-content -->
@@ -633,7 +709,7 @@
 </div>
 <!-- /.modal -->
 
-<!-- Condition -->
+<!-- Service -->
 <div class="modal fade" id="modal-sow-edit">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -659,6 +735,59 @@
 </div>
 <!-- /.modal -->
 
+<!-- Status -->
+<div class="modal fade" id="modal-sta-edit">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Edit Status</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Status</label>
+          <select id="status_list" class="form-control">
+            <!-- status list -->
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="sta_update_btn" data-dismiss="modal">Save</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<!-- Discount -->
+<div class="modal fade" id="modal-discount">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Discount</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Formula</label>
+          <input type="text" id="har_discount" class="form-control">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="discount_update_btn" data-dismiss="modal">Save</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
 
 <!-- confirm delete -->
 <div class="modal modal-danger fade" id="modal-sel-delete">
@@ -697,7 +826,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-outline" id="confirm_con_delete">Delete</button>
+        <button type="button" class="btn btn-outline" id="confirm_con_delete" data-dismiss="modal">Delete</button>
       </div>
     </div>
     <!-- /.modal-content -->

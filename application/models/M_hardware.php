@@ -51,13 +51,13 @@ class M_hardware extends CI_Model{
 	}
 
 	public function get_hardware_by_prj_id($prj_id){
-		$this->db->select("syt_name, har_id, pro_model, har_syt_id, pro_description, har_qty, uni_name, pro_price, (pro_price * har_qty) AS amount ")
+		$this->db->select("syt_name, har_id, pro_model, har_syt_id, pro_description, har_qty, uni_name, pro_price, (pro_price * har_qty) AS amount, har_discount")
 		->from("hardware")
-		->join("product", "har_pro_id = product.pro_id")
+		->join("product", "har_pro_id = pro_id")
 		->join("unit", "pro_uni_id = uni_id")
 		->join("system_type", "syt_id = har_syt_id")
 		->where("har_prj_id", $prj_id)
-		->order_by("har_id", "DESC");;
+		->order_by("har_id", "DESC");
 
 		return $this->db->get()->result();
 	}
@@ -68,7 +68,7 @@ class M_hardware extends CI_Model{
 	}
 
 	public function get_hardware_by_har_id($har_id){
-		$this->db->select("syt_name, har_id, pro_model, pro_description, har_qty, uni_name, pro_price, (pro_price * har_qty) AS amount, pro_bra_id")
+		$this->db->select("syt_name, har_id, pro_model, pro_description, har_qty, uni_name, pro_price, (pro_price * har_qty) AS amount, pro_bra_id, har_discount")
 		->from("hardware")
 		->join("product", "har_pro_id = product.pro_id")
 		->join("unit", "pro_uni_id = uni_id")
@@ -79,6 +79,21 @@ class M_hardware extends CI_Model{
 	}
 
 	public function update_hardware($data){
+		$this->db->where("har_id", $data["har_id"])
+		->update("hardware", $data);
+	}
+
+	public function get_discount($har_id){
+
+		$this->db->select("har_discount")
+		->from("hardware")
+		->where("har_id", $har_id);
+
+		return $this->db->get()->result();
+	}
+
+	public function set_discount($data){
+		
 		$this->db->where("har_id", $data["har_id"])
 		->update("hardware", $data);
 	}

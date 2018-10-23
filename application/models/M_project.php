@@ -117,6 +117,7 @@ class M_project extends CI_Model{
 		$condition = "prj_parent_id = '".$data["prj_id"]."' OR prj_id='".$data["prj_id"]."'";
 		$this->db->select("*")
 		->from("project")
+		->join("status", "sta_id = prj_sta_id", "left")
 		->where($condition)
 		->order_by("prj_version");
 
@@ -165,7 +166,7 @@ class M_project extends CI_Model{
 
 		foreach($services as $row){
 
-			$sum_cost += $row->sel_ser_value;
+			$sum_cost += $row->sel_ser_price * $row->sel_ser_unit;
 		}
 
 		$data["sum_cost"] = $sum_cost;
@@ -213,6 +214,13 @@ class M_project extends CI_Model{
 
 				$duplicate_from["project"]["prj_version"] = $revised_no + 1;
 			}
+
+			// Set status
+			$status["prj_last_version"] = 0;
+
+			$this->db->where("prj_id", $prj_id)
+			->update("project", $status);
+
 		}else{
 			$max_version = $this->db->select("MAX(prj_version) as version")
 			->from("project")
@@ -220,10 +228,21 @@ class M_project extends CI_Model{
 			->get()->result();
 
 			$duplicate_from["project"]["prj_version"] = $max_version[0]->version + 1;	
+
+			// Set status
+			$status["prj_last_version"] = 0;
+			
+			$this->db->where("prj_id", $prj_id)
+			->update("project", $status);
+
+			$this->db->where("prj_parent_id", $parent_id[0]->prj_parent_id)
+			->update("project", $status);
 		}
 			
 		// Set date
 		$duplicate_from["project"]["prj_wot_date"] = date("Y-m-d");
+		$duplicate_from["project"]["prj_last_version"] = 1;
+
 		// Insert project
 		$this->db->insert("project", $duplicate_from["project"]);
 
@@ -279,7 +298,8 @@ class M_project extends CI_Model{
 
 			$data["sel_ser_id"] = $row->sel_ser_id;
 			$data["sel_prj_id"] = $new_prj_id;
-			$data["sel_ser_value"] = $row->sel_ser_value;
+			$data["sel_ser_price"] = $row->sel_ser_price;
+			$data["sel_ser_unit"] = $row->sel_ser_unit;
 			$this->db->insert("service_log", $data);
 		}
 
@@ -288,15 +308,16 @@ class M_project extends CI_Model{
 		//#################
 		$data = NULL;
 		$this->db->select("*")
-		->from("condition")
-		->where("con_prj_id", $prj_id);
+		->from("condition_log")
+		->where("col_prj_id", $prj_id);
 
 		$condition_list = $this->db->get()->result();
 		foreach($condition_list as $row){
 
-			$data["con_value"] = $row->con_value;
-			$data["con_prj_id"] = $new_prj_id;
-			$this->db->insert("condition", $data);
+			$data["col_con_id"] = $row->col_con_id;
+			$data["col_con_other"] = $row->col_con_id;
+			$data["col_prj_id"] = $new_prj_id;
+			$this->db->insert("condition_log", $data);
 		}
 
 		//#################
@@ -304,15 +325,16 @@ class M_project extends CI_Model{
 		//#################
 		$data = NULL;
 		$this->db->select("*")
-		->from("scope_of_work")
-		->where("sow_prj_id", $prj_id);
+		->from("scope_of_work_log")
+		->where("sol_prj_id", $prj_id);
 
-		$scope_of_work = $this->db->get()->result();
-		foreach($scope_of_work as $row){
+		$scope_of_work_log = $this->db->get()->result();
+		foreach($scope_of_work_log as $row){
 
-			$data["sow_value"] = $row->sow_value;
-			$data["sow_prj_id"] = $new_prj_id;
-			$this->db->insert("scope_of_work", $data);
+			$data["sol_sow_id"] = $row->sol_sow_id;
+			$data["sol_sow_other"] = $row->sol_sow_id;
+			$data["sol_prj_id"] = $new_prj_id;
+			$this->db->insert("scope_of_work_log", $data);
 		}
 	}
 
@@ -322,8 +344,66 @@ class M_project extends CI_Model{
 	}
 
 	public function get_max_id(){
-		$this->db->select("MAX(prj_id) as max_id ")
-		->from("project");
+		// $this->db->select("MAX(prj_id) as max_id ")
+		// ->from("project");
+
+		$date = date("Ym");
+		$this->db->select("SUBSTR(prj_ref_no, 9, 3) as max_id")
+		->from("project")
+		->like("prj_ref_no", $date, "after")
+		->order_by("max_id", "desc")
+		->limit(1);
+
+		return $this->db->get();
+	}
+
+	public function get_vat_by_prj_id($prj_id){
+
+		$this->db->select("prj_vat")
+		->from("project")
+		->where("prj_id", $prj_id);
+
+		return $this->db->get();
+	}
+
+	public function follow_up_project($period="", $year=""){
+
+		$condition = array("prj_delete" => 0, "prj_parent_id" => NULL);
+		$this->db->select("*")
+		->from("project")
+		->join("place_type", "plt_id = prj_plt_id", "left")
+		->join("work_type", "wor_id = prj_wor_id", "left")
+		->join("status", "sta_id = prj_sta_id", "left")
+		->join("customer_type", "ctp_id = prj_ctp_id", "left")
+		->join("employee", "emp_id = prj_emp_id", "left");
+
+		if($period != ""){
+			
+			$between = 0;
+			if($period == 1){
+
+				$between == 1;
+			}else if($period == 2){
+
+				$between == 4;
+			}else if($period == 3){
+
+				$between == 7;
+			}else if($period == 4){
+
+				$between == 10;
+			}
+			$this->db->where("MONTH(prj_create_date) >= ", $between);
+			$this->db->where("MONTH(prj_create_date) <=", $between + 2);
+		}
+
+		if($year != ""){
+			
+			$this->db->where("YEAR(prj_create_date)", $year);
+		}
+
+		$this->db->where($condition)
+		->order_by("prj_id", "DESC");
 
 		return $this->db->get();
 	}

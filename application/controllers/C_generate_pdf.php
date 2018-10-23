@@ -27,8 +27,8 @@ class C_generate_pdf extends CI_Controller{
 		$this->load->model("M_project");
 		$this->load->model("M_hardware");
 		$this->load->model("M_accessory");
-		$this->load->model("M_condition");
-		$this->load->model("M_scope_of_work");
+		$this->load->model("M_condition_log");
+		$this->load->model("M_scope_of_work_log");
 
 		$this->load->model("M_employee");
 		$this->load->model("M_permission_module");
@@ -36,6 +36,7 @@ class C_generate_pdf extends CI_Controller{
 		$this->load->library('Pdf_quatation'); 
 		$this->pdf_quatation->SetFontPath("fonts/");
 
+		//$this->pdf_quatation->SetTextColor(0,0,128);
 	}
 
 	public function header_paper(){
@@ -45,8 +46,8 @@ class C_generate_pdf extends CI_Controller{
 		$this->pdf_quatation->AddFont('THSarabun','I','THSarabun.php');
 		$this->pdf_quatation->AddFont('THSarabun','U','THSarabun.php');
 		$this->pdf_quatation->SetFont('THSarabun','',24);
+		$this->pdf_quatation->SetTextColor(0,0,128);
 		$this->pdf_quatation->Cell(159,10,iconv( 'UTF-8','TIS-620','OTEC SUPPLY COMPANY LIMITED'),$border_cell,1,"C");
-		
 		$this->pdf_quatation->SetFont('THSarabun','',16);
 		$this->pdf_quatation->Cell(195,8,iconv( 'UTF-8','TIS-620','1927 Moo 6 Sukhumvit Rd., Samrong-Nua, Muang, Samutprakarn 10270'),$border_cell,1,"C");
 		$this->pdf_quatation->Cell(220,8,iconv( 'UTF-8','TIS-620','Tel/Fax. (02) 744-5659, 744-5940, 5942, 5944 Fax. # 102 E-mail: sale@otecsupply.com'),$border_cell,1,"C");
@@ -93,9 +94,9 @@ class C_generate_pdf extends CI_Controller{
 		// Get acessory 
 		$accessory_list = $this->M_accessory->get_accessory_by_prj_id($prj_id);
 		// Get condition
-		$condition_list = $this->M_condition->get_condition_by_prj_id($prj_id);
+		$condition_list = $this->M_condition_log->get_condition_log_by_prj_id($prj_id);
 		// Get scope of work
-		$scope_of_work_list = $this->M_scope_of_work->get_scope_of_work_by_prj_id($prj_id);
+		$scope_of_work_list = $this->M_scope_of_work_log->get_scope_of_work_log_by_prj_id($prj_id);
 
 	
 		$this->pdf_quatation->AddPage();
@@ -159,7 +160,7 @@ class C_generate_pdf extends CI_Controller{
 
 		$this->pdf_quatation->AliasNbPages('{totalPages}');
 		$this->pdf_quatation->Text(173,65,iconv( 'UTF-8','TIS-620',"แผนที่ ".$this->pdf_quatation->PageNo()."/{totalPages}"));
-		$this->pdf_quatation->Text(173,69,iconv( 'UTF-8','TIS-620',"SHEET NO."));
+		$this->pdf_quatation->Text(173,69,iconv( 'UTF-8','TIS-620',"Revised ". $project_detail["prj_version"]));
 		$this->pdf_quatation->Ln();
 
 		// Header table
@@ -225,18 +226,91 @@ class C_generate_pdf extends CI_Controller{
 
 					$this->pdf_quatation->Cell(20,($height / 2),'','LR',0,'C',0); 
 					$this->pdf_quatation->Cell(20,($height / 2), $hardware_row->pro_model,'LR',0,'C',0); 
-					$this->pdf_quatation->Cell(65,($height / 2), $hardware_row->pro_description,'LR',0,'L',0); 
-					$this->pdf_quatation->Cell(15,($height / 2), $hardware_row->har_qty,'LR',0,'C',0); 
-					$this->pdf_quatation->Cell(15,($height / 2), iconv('UTF-8','TIS-620',$hardware_row->uni_name),'LR',0,'C',0); 
-					$this->pdf_quatation->Cell(25,($height / 2), number_format($hardware_row->pro_price),'LR',0,'C',0); 
-					$this->pdf_quatation->Cell(30,($height / 2), number_format($hardware_row->amount),'LR',0,'C',0); 
-					$this->pdf_quatation->Ln();
-					
+
+					// check string width
+					$str_width = $this->pdf_quatation->GetStringWidth($hardware_row->pro_description);
+
+					if($str_width > 60){
+
+						// This case for text more than 1 line
+						$char = str_split($hardware_row->pro_description);
+						$first_line = true;
+						$temp = "";
+						for($i=0;$i<count($char);$i++){
+
+							$temp .= $char[$i];
+							$width = $this->pdf_quatation->GetStringWidth($temp);
+							//echo $width."<BR>";
+							if($width >= 60){
+
+								if($first_line){
+									// Discount
+									$discount_list = explode("+", $hardware_row->har_discount);
+									$amount = $hardware_row->amount;
+									for($i=0;$i<count($discount_list);$i++){
+										$amount -= ($discount_list[$i] * $amount) / 100;
+									}
+									$this->pdf_quatation->Cell(65,($height / 2), $temp,'LR',0,'L',0);
+									$this->pdf_quatation->Cell(15,($height / 2), $hardware_row->har_qty,'LR',0,'C',0); 
+									$this->pdf_quatation->Cell(15,($height / 2), iconv('UTF-8','TIS-620',$hardware_row->uni_name),'LR',0,'C',0); 
+									$this->pdf_quatation->Cell(25,($height / 2), number_format(($amount / $hardware_row->har_qty)),'LR',0,'C',0); 
+									$this->pdf_quatation->Cell(30,($height / 2), number_format($amount),'LR',0,'C',0); 
+									$this->pdf_quatation->Ln();
+
+									// Set line status
+									$first_line = false;
+
+									// Reset
+									$temp = "";
+								}else{
+									
+									$this->pdf_quatation->Cell(20,($height / 2),'','LR',0,'C',0); 
+									$this->pdf_quatation->Cell(20,($height / 2),'','LR',0,'C',0); 
+									$this->pdf_quatation->Cell(65,($height / 2), $temp,'LR',0,'L',0); 
+									$this->pdf_quatation->Cell(15,($height / 2),'','LR',0,'C',0); 
+									$this->pdf_quatation->Cell(15,($height / 2),'','LR',0,'C',0); 
+									$this->pdf_quatation->Cell(25,($height / 2),'','LR',0,'C',0); 
+									$this->pdf_quatation->Cell(30,($height / 2),'','LR',0,'C',0); 
+									$this->pdf_quatation->Ln();
+
+									// Reset
+									$temp = "";
+								}
+							}
+						}
+					}else{
+						// Discount
+						$discount_list = explode("+", $hardware_row->har_discount);
+						$amount = $hardware_row->amount;
+						for($i=0;$i<count($discount_list);$i++){
+							$amount -= ($discount_list[$i] * $amount) / 100;
+						}
+						$this->pdf_quatation->Cell(65,($height / 2), $hardware_row->pro_description,'LR',0,'L',0);
+						$this->pdf_quatation->Cell(15,($height / 2), $hardware_row->har_qty,'LR',0,'C',0); 
+						$this->pdf_quatation->Cell(15,($height / 2), iconv('UTF-8','TIS-620',$hardware_row->uni_name),'LR',0,'C',0); 
+						$this->pdf_quatation->Cell(25,($height / 2), number_format(($amount / $hardware_row->har_qty)),'LR',0,'C',0); 
+						$this->pdf_quatation->Cell(30,($height / 2), number_format($amount),'LR',0,'C',0); 
+						$this->pdf_quatation->Ln();
+					}
+
 					// Total sum
-					$total += $hardware_row->amount;
+					$total += $amount;
 				}
 			}
 
+
+			// Discount
+			$discount_price = (($total * $discount) / 100);
+			$this->pdf_quatation->Cell(20,($height / 2),'','LR',0,'C',0); 
+			$this->pdf_quatation->Cell(20,($height / 2),'','LR',0,'C',0); 
+			$this->pdf_quatation->Cell(65,($height / 2),'Discount '.$discount.' %','LR',0,'C',0); 
+			$this->pdf_quatation->Cell(15,($height / 2),'','LR',0,'C',0); 
+			$this->pdf_quatation->Cell(15,($height / 2),'','LR',0,'C',0); 
+			$this->pdf_quatation->Cell(25,($height / 2),'','LR',0,'C',0); 
+			$this->pdf_quatation->Cell(30,($height / 2), number_format($discount_price),'LR',0,'R',0);
+			$this->pdf_quatation->Ln();
+
+			$total = $total - $discount_price;
 
 			// Total
 			$total_final = $total;
@@ -279,13 +353,80 @@ class C_generate_pdf extends CI_Controller{
 			}
 			$this->pdf_quatation->Cell(20,($height / 2), '','LR',0,'C',0); 
 			$this->pdf_quatation->Cell(20,($height / 2), $accessory_row->pro_model,'LR',0,'C',0); 
-			$this->pdf_quatation->Cell(65,($height / 2), $accessory_row->pro_description,'LR',0,'L',0); 
-			$this->pdf_quatation->Cell(15,($height / 2), $accessory_row->acc_qty,'LR',0,'C',0); 
-			$this->pdf_quatation->Cell(15,($height / 2), iconv('UTF-8','TIS-620',$accessory_row->uni_name),'LR',0,'C',0); 
-			$this->pdf_quatation->Cell(25,($height / 2), number_format($accessory_row->pro_price),'LR',0,'C',0); 
-			$this->pdf_quatation->Cell(30,($height / 2), number_format($accessory_row->amount),'LR',0,'C',0); 
-			$this->pdf_quatation->Ln();
-			$total +=  $accessory_row->amount;
+			//$this->pdf_quatation->Cell(65,($height / 2), $accessory_row->pro_description,'LR',0,'L',0); 
+
+			// check string width
+			$str_width = $this->pdf_quatation->GetStringWidth($accessory_row->pro_description);
+			
+			if($str_width > 60){
+
+				// This case for text more than 1 line
+				$char = str_split($accessory_row->pro_description);
+				$first_line = true;
+				$temp = "";
+				for($i=0;$i<count($char);$i++){
+
+					$temp .= $char[$i];
+					$width = $this->pdf_quatation->GetStringWidth($temp);
+					//echo $width."<BR>";
+					if($width >= 60){
+
+						if($first_line){
+
+							// Discount
+							$discount_list = explode("+", $accessory_row->acc_discount);
+							$amount = $accessory_row->amount;
+							for($i=0;$i<count($discount_list);$i++){
+								$amount -= ($discount_list[$i] * $amount) / 100;
+							}
+
+							$this->pdf_quatation->Cell(65,($height / 2), $temp,'LR',0,'L',0);
+							$this->pdf_quatation->Cell(15,($height / 2), $accessory_row->acc_qty,'LR',0,'C',0); 
+							$this->pdf_quatation->Cell(15,($height / 2), iconv('UTF-8','TIS-620',$accessory_row->uni_name),'LR',0,'C',0); 
+							$this->pdf_quatation->Cell(25,($height / 2), number_format(($amount / $accessory_row->acc_qty)),'LR',0,'C',0); 
+							$this->pdf_quatation->Cell(30,($height / 2), number_format($amount),'LR',0,'C',0); 
+							$this->pdf_quatation->Ln();
+
+							// Set line status
+							$first_line = false;
+
+							// Reset
+							$temp = "";
+						}else{
+							
+							$this->pdf_quatation->Cell(20,($height / 2),'','LR',0,'C',0); 
+							$this->pdf_quatation->Cell(20,($height / 2),'','LR',0,'C',0); 
+							$this->pdf_quatation->Cell(65,($height / 2), $temp,'LR',0,'L',0); 
+							$this->pdf_quatation->Cell(15,($height / 2),'','LR',0,'C',0); 
+							$this->pdf_quatation->Cell(15,($height / 2),'','LR',0,'C',0); 
+							$this->pdf_quatation->Cell(25,($height / 2),'','LR',0,'C',0); 
+							$this->pdf_quatation->Cell(30,($height / 2),'','LR',0,'C',0); 
+							$this->pdf_quatation->Ln();
+
+							// Reset
+							$temp = "";
+						}
+					}
+				}
+			}else{
+
+				// Discount
+				$discount_list = explode("+", $accessory_row->acc_discount);
+				$amount = $accessory_row->amount;
+				for($i=0;$i<count($discount_list);$i++){
+					$amount -= ($discount_list[$i] * $amount) / 100;
+				}
+
+				$this->pdf_quatation->Cell(65,($height / 2), $accessory_row->pro_description,'LR',0,'L',0);
+				$this->pdf_quatation->Cell(15,($height / 2), $accessory_row->acc_qty,'LR',0,'C',0); 
+				$this->pdf_quatation->Cell(15,($height / 2), iconv('UTF-8','TIS-620',$accessory_row->uni_name),'LR',0,'C',0); 
+				$this->pdf_quatation->Cell(25,($height / 2), number_format(($amount / $accessory_row->acc_qty)),'LR',0,'C',0); 
+				$this->pdf_quatation->Cell(30,($height / 2), number_format($amount),'LR',0,'C',0); 
+				$this->pdf_quatation->Ln();
+			}
+
+
+			$total +=  $amount;
 		}
 
 		// Total acccessory 
@@ -310,22 +451,13 @@ class C_generate_pdf extends CI_Controller{
 		$this->pdf_quatation->Cell(30,($height / 2), number_format($sub_total),'LR',0,'R',0); 
 		$this->pdf_quatation->Ln();
 
-		// Discount
-		$this->pdf_quatation->Cell(20,($height / 2),'','LR',0,'C',0); 
-		$this->pdf_quatation->Cell(20,($height / 2),'','LR',0,'C',0); 
-		$this->pdf_quatation->Cell(65,($height / 2),'Discount','LR',0,'C',0); 
-		$this->pdf_quatation->Cell(15,($height / 2),'','LR',0,'C',0); 
-		$this->pdf_quatation->Cell(15,($height / 2),'','LR',0,'C',0); 
-		$this->pdf_quatation->Cell(25,($height / 2),'','LR',0,'C',0); 
-		$this->pdf_quatation->Cell(30,($height / 2),$discount,'LR',0,'R',0); 
-		$this->pdf_quatation->Ln();
 		
 		// Vat
-		$vat = 7;
-		$vat_price = ($sub_total * 7) / 100;
+		$vat = $project_detail["prj_vat"];
+		$vat_price = ($sub_total * $vat) / 100;
 		$this->pdf_quatation->Cell(20,($height / 2),'','LR',0,'C',0); 
 		$this->pdf_quatation->Cell(20,($height / 2),'','LR',0,'C',0); 
-		$this->pdf_quatation->Cell(65,($height / 2),'Vat 7%','LR',0,'C',0); 
+		$this->pdf_quatation->Cell(65,($height / 2),'Vat '.$vat.'%','LR',0,'C',0); 
 		$this->pdf_quatation->Cell(15,($height / 2),'','LR',0,'C',0); 
 		$this->pdf_quatation->Cell(15,($height / 2),'','LR',0,'C',0); 
 		$this->pdf_quatation->Cell(25,($height / 2),'','LR',0,'C',0); 
@@ -333,7 +465,7 @@ class C_generate_pdf extends CI_Controller{
 		$this->pdf_quatation->Ln();
 
 		// Grand
-		$grand_price = ($vat_price + $sub_total) - (($vat_price + $sub_total) * $discount) / 100;
+		$grand_price = $vat_price + $sub_total;
 		$this->pdf_quatation->Cell(20,($height / 2),'','LR',0,'C',0); 
 		$this->pdf_quatation->Cell(20,($height / 2),'','LR',0,'C',0); 
 		$this->pdf_quatation->Cell(65,($height / 2),'Grand Total','LR',0,'C',0); 
@@ -370,7 +502,13 @@ class C_generate_pdf extends CI_Controller{
 			$temp_sow = "";
 			if($i<count($condition_list)){
 
-				$temp_condition = $condition_list[$i]->con_value;
+				if($condition_list[$i]->con_id == 99){
+
+					$temp_condition = $condition_list[$i]->col_con_other;
+				}else{
+
+					$temp_condition = $condition_list[$i]->con_value;
+				}
 			}else{
 
 				$temp_condition = "";
@@ -378,7 +516,13 @@ class C_generate_pdf extends CI_Controller{
 
 			if($i<count($scope_of_work_list)){
 
-				$temp_sow = $scope_of_work_list[$i]->sow_value;
+				if($scope_of_work_list[$i]->sow_id == 99){
+
+					$temp_sow = $scope_of_work_list[$i]->sol_sow_other;
+				}else{
+
+					$temp_sow = $scope_of_work_list[$i]->sow_value;
+				}
 			}else{
 
 				$temp_sow = "";
@@ -389,11 +533,11 @@ class C_generate_pdf extends CI_Controller{
 			$this->pdf_quatation->Ln();
 		}
 
-		$this->pdf_quatation->Cell(100,$height / 2,iconv('UTF-8','TIS-620', "- 30% เงินมัดจำการสั่ง ซื้อ โปรดชำระภายใน 7 วัน เมื่ออนุมัติการสั่งซื้อ"),'',0,'L',0); 
-		$this->pdf_quatation->Cell(60,$height / 2,iconv('UTF-8','TIS-620', "หมายเหตุ ค่าสางสินค้าฟรีเฉพาะ Site งานในกรุงเทพฯ เท่านั้น"),'',0,'L',0); 
+		$this->pdf_quatation->Cell(100,$height / 2,"",'',0,'L',0); 
+		$this->pdf_quatation->Cell(60,$height / 2,iconv('UTF-8','TIS-620', "หมายเหตุ ค่าส่งสินค้าฟรีเฉพาะ Site งานในกรุงเทพฯ เท่านั้น"),'',0,'L',0); 
 		$this->pdf_quatation->Ln();
 
-		$this->pdf_quatation->Cell(100,$height / 2,iconv('UTF-8','TIS-620', "- 70% ของมูลค่าสินค้าที่จัดส่งจริงในแต่ละวงด โปรดชำระเป็น PDC เช็ค 30 เมื่อได้เซ็นรับสินค้า"),'',0,'L',0); 
+		//$this->pdf_quatation->Cell(100,$height / 2,iconv('UTF-8','TIS-620', "- 70% ของมูลค่าสินค้าที่จัดส่งจริงในแต่ละวงด โปรดชำระเป็น PDC เช็ค 30 เมื่อได้เซ็นรับสินค้า"),'',0,'L',0); 
 		$this->pdf_quatation->Cell(60,$height / 2,iconv('UTF-8','TIS-620', ""),0,'L',0); 
 		$this->pdf_quatation->Ln();
 		$this->pdf_quatation->Ln();

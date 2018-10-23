@@ -38,4 +38,13 @@ class M_brand_log extends CI_Model{
 		return $this->db->get();
 
 	}
+
+	public function get_brand_log_by_syt_id($syt_id){
+		$this->db->select("bra_id, bra_name")
+		->from("brand_log")
+		->join("brand", "brand_log.brl_bra_id = brand.bra_id")
+		->where("brl_syt_id", $syt_id);
+
+		return $this->db->get();
+	}
 }

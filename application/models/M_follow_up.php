@@ -13,7 +13,7 @@ class M_follow_up extends CI_Model{
 		$this->db->select("*")
 			->select_max('fol_date','max_date')
 			->from("project")
-			->join("work_type", "wor_id = prj_wor_id", "inner")
+			->join("status", "sta_id = prj_sta_id", "inner")
 			->join("follow_up", "prj_id = fol_prj_id", "left")
 			->where("prj_delete", 0)
 			->where("prj_parent_id", null)

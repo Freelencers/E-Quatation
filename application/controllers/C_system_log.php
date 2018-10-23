@@ -45,6 +45,7 @@ class C_system_log extends CI_Controller{
 			}
 		}
 
+		echo $last_project_id;
 		for($i=0;$i < count($row["system_type_list"]);$i++){
 
 			$temp["syl_prj_id"] = $last_project_id;

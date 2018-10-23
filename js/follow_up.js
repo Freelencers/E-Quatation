@@ -21,7 +21,7 @@
 
 					table = "<tr><td colspan='4' align='center'> No data </td></tr>";
 				}else{
-					table += project_row(data.project[i].prj_title, data.project[i].wor_name, data.project[i].prj_ref_no , data.project[i].prj_id , day);
+					table += project_row(data.project[i].prj_title, data.project[i].sta_name, data.project[i].prj_ref_no , data.project[i].prj_id , day);
 				}
 			}
 			$("#project_table tbody").html(table).fadeIn(100);
@@ -102,21 +102,23 @@
         table += "<tr>";
 		table += "<td><center>"+alert_date+"</center></td>"
         table += "<td id='" + data_id + "_field_quatation_no'><center>" + quatation_no + "</center></td>";
-        table += "<td id='" + data_id + "_field_name'>" + project_name + "</td>";
-		if(status == 'ปกติ'){
-			table += "<td id='" + data_id + "_field_status'><center><span class='label label-primary'>" + status + "</span></center></td>";
-		}
-		else if(status == 'ได้งานแล้ว'){
-			table += "<td id='" + data_id + "_field_status'><center><span class='label label-success'>" + status + "</span></center></td>";
-		}
-		else if(status == 'ปกติด่วน'){
-			table += "<td id='" + data_id + "_field_status'><center><span class='label label-warning'>" + status + "</span></center></td>";
-		}
-		else if(status == 'ได้งานแล้วด่วน'){
-			table += "<td id='" + data_id + "_field_status'><center><span class='label label-danger'>" + status + "</span></center></td>";
-		}else{
-			table += "<td id='" + data_id + "_field_status'><center><span class='label label-primary'>" + status + "</span></center></td>";
-		}
+		table += "<td id='" + data_id + "_field_name'>" + project_name + "</td>";
+
+		table += "<td id='" + data_id + "_field_status'><center><span class='label label-primary'>" + status + "</span></center></td>";
+		// if(status == 'ปกติ'){
+		// 	table += "<td id='" + data_id + "_field_status'><center><span class='label label-primary'>" + status + "</span></center></td>";
+		// }
+		// else if(status == 'ได้งานแล้ว'){
+		// 	table += "<td id='" + data_id + "_field_status'><center><span class='label label-success'>" + status + "</span></center></td>";
+		// }
+		// else if(status == 'ปกติด่วน'){
+		// 	table += "<td id='" + data_id + "_field_status'><center><span class='label label-warning'>" + status + "</span></center></td>";
+		// }
+		// else if(status == 'ได้งานแล้วด่วน'){
+		// 	table += "<td id='" + data_id + "_field_status'><center><span class='label label-danger'>" + status + "</span></center></td>";
+		// }else{
+		// 	table += "<td id='" + data_id + "_field_status'><center><span class='label label-primary'>" + status + "</span></center></td>";
+		// }
 		//success, danger, warning,Info
         table += "<td id='" + data_id + "_field_prj_id' >";
         table += "  <center><i class='fa fa-search' style='cursor:pointer;' onclick='follow_up_detail("+data_id+")'></i></center>";

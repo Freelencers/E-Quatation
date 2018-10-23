@@ -49,7 +49,7 @@ class M_accessory extends CI_Model{
 	}
 
 	public function get_accessory_by_prj_id($prj_id){
-		$this->db->select("acc_id, pro_model, pro_description, acc_qty, uni_name, pro_price, (pro_price * acc_qty) AS amount ")
+		$this->db->select("acc_id, pro_model, pro_description, acc_qty, uni_name, pro_price, (pro_price * acc_qty) AS amount, acc_discount ")
 		->from("accessory")
 		->join("product", "acc_pro_id = product.pro_id")
 		->join("unit", "pro_uni_id = uni_id")
@@ -74,6 +74,21 @@ class M_accessory extends CI_Model{
 	}
 
 	public function update_accessory($data){
+		$this->db->where("acc_id", $data["acc_id"])
+		->update("accessory", $data);
+	}
+
+	public function get_discount($acc_id){
+
+		$this->db->select("acc_discount")
+		->from("accessory")
+		->where("acc_id", $acc_id);
+
+		return $this->db->get()->result();
+	}
+
+	public function set_discount($data){
+		
 		$this->db->where("acc_id", $data["acc_id"])
 		->update("accessory", $data);
 	}

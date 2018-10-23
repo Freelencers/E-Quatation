@@ -25,55 +25,35 @@ class C_report_all_project extends CI_Controller{
 		}else{
 
 			$data["permission"] = $permission;
-			// Chart--------------------------------
-			$this->month = null;
-			$this->year = null;
-			// $this->emp_id = $this->session->userdata("emp_id");
-			
-			
-			if($this->input->post("prj_month") != null && $this->input->post("prj_year") != null){
-				$this->month = $this->input->post("prj_month");
-				$this->year = $this->input->post("prj_year");
-				// die;
-			}else{
-				$this->month = date('m');
-				$this->year = date('Y');
-				// $this->month = '10';
-				// $this->year = '2017';
-			}
-			$data['month1'] = $this->month;
-			$data['nyear'] = $this->year;
-			$data['get_year'] = $this->rfu->get_report_project_year();
-			$data['get_month'] = $this->rfu->get_report_project_month();
-			$data['report'] = $this->rfu->get_report_project();
-			$data['em'] = $this->rfu->get_empFor_report();
-			$data['fl'] = $this->rfu->get_project_report();
-			// $a = date('d-m-Y');
-			// echo date("F", strtotime($a));
-			/*
-			$sum = 0;
-			$sum1 = 0;
-			foreach($data['em']->result() as $row){
-				echo $row->emp_first_name."=>";
-				foreach($data['fl']->result() as $f){
-					if($f->prj_emp_id == $row->emp_id){
-						$sum+=count($f->prj_emp_id);
-					}
-					
-				}
-				echo $sum-$sum1;
-				echo "<br>";
-				
-				$sum1 = $sum;
-			}
-			*/
-			// echo date("F", strtotime("11-12-10")); 
-			//-----------------------------------
 			$view = $this->load->view("V_report_all_project", $data, TRUE);
 			template( "All Project", "All Project (work)", $view, $nav);
 
 		}
 
+	}
+
+	public function api_income_report(){
+		$data = $this->input->post();
+		$json = "";
+
+		$result = $this->rfu->get_graph($data["period"],$data["year"]);
+		$result = $result->result();
+		for($i=0;$i<count($result);$i++){
+
+			// Graph
+			$json["graph"][$i][0] = $result[$i]->emp_first_name;
+			$json["graph"][$i][1] = intval($result[$i]->amount);
+
+			// Table
+			$json["table"][$i][0] = $result[$i]->emp_first_name;
+			$json["table"][$i][1] = $result[$i]->emp_last_name;
+			$json["table"][$i][2] = $result[$i]->amount;
+		}
+
+
+
+
+		echo json_encode($json);
 	}
 }
 ?>

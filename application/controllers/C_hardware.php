@@ -99,4 +99,18 @@ class C_hardware extends CI_Controller{
 		echo json_encode($json);
 
 	}
+
+	public function api_get_discount(){
+		$data = $this->input->post();
+		$result = $this->M_hardware->get_discount($data["har_id"]);
+		echo json_encode($result);
+	}
+
+	public function api_set_discount(){
+		$data = $this->input->post();
+		$result = $this->M_hardware->set_discount($data);
+
+		$resp["status"] = 1;
+		echo json_encode($resp);
+	}
 }

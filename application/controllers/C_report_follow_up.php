@@ -30,6 +30,7 @@ class C_report_follow_up extends CI_Controller{
 	}
 
 	public function api_get_follow_up(){
+
 		$post = $this->input->post();
 		$result = $this->rfu->get_tracking_rate($post["month"], $post["year"]);
 		echo json_encode($result);

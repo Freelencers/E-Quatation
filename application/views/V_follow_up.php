@@ -52,7 +52,7 @@
       <ul class="nav nav-tabs pull-right">
         <!--<li><a href="#tab_2-1" data-toggle="tab">Estimate</a></li> -->
         <li class="active"><a href="#tab_1-1" data-toggle="tab">Support</a></li>
-        <li><a href="#tab_1-2" data-toggle="tab">Estimate</a></li>
+        <li><a href="#tab_1-2" data-toggle="tab">Sale</a></li>
         <li class="pull-left header"><i class="fa fa-map-pin"></i>Follow up</li>
       </ul>
       <div class="tab-content">
@@ -93,7 +93,7 @@
 						<div class="box-header">
 								<div class="col-sm-2 pull-right">
 									<button class="btn btn-block btn-primary add_follow_up" id="enable_btn" fol_type = "1" data-toggle="modal" data-target="#modal-follow_up_add" disabled>
-										<i class="fa fa-fw fa-plus"></i>New Message Estimate
+										<i class="fa fa-fw fa-plus"></i>New Message Sale
 									</button>
 								</div>
 							</div>

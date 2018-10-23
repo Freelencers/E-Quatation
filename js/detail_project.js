@@ -76,7 +76,6 @@ $(document).ready(function(){
         $("#prj_email").val(data.project[0].prj_email);
         $("#prj_fax").val(data.project[0].prj_fax);
         $("#prj_emp_id").val(data.project[0].prj_emp_id);
-        console.log(data.project[0].prj_emp_id);
         $("#prj_customer").val(data.project[0].prj_customer);
         $("#prj_customer_name").val(data.project[0].prj_customer_name);
         $("#prj_regular_customer").val(data.project[0].prj_regular_customer);

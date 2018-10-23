@@ -25,43 +25,48 @@ class C_scope_of_work extends CI_Controller{
 		$this->load->model("M_scope_of_work");
 	}
 
-	public function api_insert_scope_of_work(){
+	// public function api_insert_scope_of_work(){
 
-		$row = $this->input->post();
-		$this->M_scope_of_work->insert_scope_of_work($row);
+	// 	$row = $this->input->post();
+	// 	$this->M_scope_of_work->insert_scope_of_work($row);
 
-		$data = $this->M_scope_of_work->get_last_scope_of_work($row["sow_prj_id"]);
-		$data["no"] = count($this->M_scope_of_work->get_scope_of_work_by_prj_id($row["sow_prj_id"]));
-		echo json_encode($data);
-	}
+	// 	$data = $this->M_scope_of_work->get_last_scope_of_work($row["sow_prj_id"]);
+	// 	$data["no"] = count($this->M_scope_of_work->get_scope_of_work_by_prj_id($row["sow_prj_id"]));
+	// 	echo json_encode($data);
+	// }
 
-	public function api_get_scope_of_work_by_prj_id(){
+	// public function api_get_scope_of_work_by_prj_id(){
 
-		$row = $this->input->post();
-		$data = $this->M_scope_of_work->get_scope_of_work_by_prj_id($row["prj_id"]);
+	// 	$row = $this->input->post();
+	// 	$data = $this->M_scope_of_work->get_scope_of_work_by_prj_id($row["prj_id"]);
 
-		echo json_encode($data);
-	}
+	// 	echo json_encode($data);
+	// }
 
-	public function api_get_scope_of_work_by_sow_id(){
-		$row = $this->input->post();
-		$data["scope_of_work"] = $this->M_scope_of_work->get_scope_of_work_by_sow_id($row["sow_id"]);
+	// public function api_get_scope_of_work_by_sow_id(){
+	// 	$row = $this->input->post();
+	// 	$data["scope_of_work"] = $this->M_scope_of_work->get_scope_of_work_by_sow_id($row["sow_id"]);
 
-		echo json_encode($data);
-	}
+	// 	echo json_encode($data);
+	// }
 
-	public function api_update_scope_of_work(){
-		$row = $this->input->post();
-		$this->M_scope_of_work->update_scope_of_work($row);
-		$data["scope_of_work"] = $this->M_scope_of_work->get_scope_of_work_by_sow_id($row["sow_id"]);
-		$data["scope_of_work"]["no"] = count($this->M_scope_of_work->get_scope_of_work_by_prj_id($data["scope_of_work"][0]->sow_prj_id)); 
+	// public function api_update_scope_of_work(){
+	// 	$row = $this->input->post();
+	// 	$this->M_scope_of_work->update_scope_of_work($row);
+	// 	$data["scope_of_work"] = $this->M_scope_of_work->get_scope_of_work_by_sow_id($row["sow_id"]);
+	// 	$data["scope_of_work"]["no"] = count($this->M_scope_of_work->get_scope_of_work_by_prj_id($data["scope_of_work"][0]->sow_prj_id)); 
 		
-		echo json_encode($data);
-	}
+	// 	echo json_encode($data);
+	// }
 
-	public function api_delete_scope_of_work(){
-		$row = $this->input->post();
-		$this->M_scope_of_work->delete_scope_of_work($row["sow_id"]);
+	// public function api_delete_scope_of_work(){
+	// 	$row = $this->input->post();
+	// 	$this->M_scope_of_work->delete_scope_of_work($row["sow_id"]);
 
+	// }
+
+	public function api_get_scope_of_work(){
+		$row = $this->M_scope_of_work->get_scope_of_work()->result();
+		echo json_encode($row);
 	}
 }

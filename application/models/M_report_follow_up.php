@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class M_report_follow_up extends CI_Model{
 
-	public function get_tracking_rate($month="", $year=""){
+	public function get_tracking_rate($period="", $year=""){
 		//get sale employee
 		$employee = $this->db->select("prj_emp_id, emp_first_name, emp_last_name")
 		->from("project")
@@ -43,8 +43,25 @@ class M_report_follow_up extends CI_Model{
 				->from("follow_up")
 				->where("fol_prj_id", $fol_prj_id);
 				if($month != ""){
+					
+					$period = 0;
+					$between = 0;
+					if($period == 1){
 
-					$this->db->where("MONTH(fol_date)", $month);
+						$between == 1;
+					}else if($period == 2){
+
+						$between == 4;
+					}else if($period == 3){
+
+						$between == 7;
+					}else if($period == 4){
+
+						$between == 10;
+					}
+					//$this->db->where("MONTH(fol_date)", $period);
+					$this->db->where("MONTH(fol_date) >= ", $between);
+					$this->db->where("MONTH(fol_date) <=", $between + 2);
 				}
 
 				if($year != ""){

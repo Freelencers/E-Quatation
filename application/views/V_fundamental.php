@@ -82,14 +82,13 @@
 
     <div class="box box-solid">
       <div class="box-header with-border">
-        <h3 class="box-title">Place Type</h3>
-
+        <h3 class="box-title">Segmentation</h3>
         <div class="box-tools">
         </div>
       </div>
       <div class="box-header">
         <div class="input-group col-xs-6 pull-right">
-          <input id="new_name_plt" type="text" class="form-control" placeholder="Place Type Name">
+          <input id="new_name_plt" type="text" class="form-control" placeholder="Segmentation Name">
           <div class="input-group-btn">
             <button id="add_plt" type="button" class="btn btn-primary btn-flat" data-toggle="modal" data-target="#modal-success">Add</button>
           </div>
@@ -100,7 +99,7 @@
         <table id="place_type_table" class="table table-bordered table-striped">
           <thead>
           <tr>
-            <th>Place Type Name</th>
+            <th>Segmentation Name</th>
             <th>Operation</th>
           </tr>
           </thead>

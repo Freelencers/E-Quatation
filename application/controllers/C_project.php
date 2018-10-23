@@ -57,10 +57,10 @@ class C_project extends CI_Controller{
 		$max_id = $this->M_project->get_max_id();
 		if($max_id->num_rows() == 0){
 			
-			$data["prj_ref_no"] = date("Ymd") . "1";
+			$data["prj_ref_no"] = date("Ymd") . "001";
 		}else{
 			$max_id = $max_id->result();
-			$data["prj_ref_no"] = date("Ymd") . ($max_id[0]->max_id + 1);
+			$data["prj_ref_no"] = date("Ymd") . sprintf("%'.03d\n", (intval($max_id[0]->max_id) + 1));
 		}
 
 		$this->M_project->insert_project($data);
@@ -170,5 +170,29 @@ class C_project extends CI_Controller{
 	public function api_discount(){
 		$data = $this->input->post();
 		$this->M_project->update_discount($data);
+	}
+
+	public function api_change_status(){
+		$data= $this->input->post();
+		$this->M_project->update_project($data);
+
+		$json["status"] = 1;
+		echo json_encode($json);
+	}
+
+	public function api_get_vat_by_prj_id(){
+		$data = $this->input->post();
+		$result = $this->M_project->get_vat_by_prj_id($data["prj_id"]);
+		$result = $result->result();
+
+		echo json_encode($result);
+	}
+
+	public function api_change_vat(){
+		$data = $this->input->post();
+		$this->M_project->update_project($data);
+
+		$json["status"] = 1;
+		echo json_encode($json);
 	}
 }

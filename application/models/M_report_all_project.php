@@ -56,5 +56,40 @@ class M_report_all_project extends CI_Model{
 		return $this->db->get();
 		
 	}
+
+	public function get_graph($period = 0 , $year = 0){
+
+		$start = 0;
+		switch($period){
+			case 1: $start = 1;
+					break;
+			case 2: $start = 4;
+					break;
+			case 3: $start = 7;
+					break;
+			case 4: $start = 10;
+					break;
+		}
+
+		$this->db->select("SUM(prj_price) AS amount, prj_emp_id, emp_first_name, emp_last_name")
+		->from("project")
+		->join("employee", "prj_emp_id = emp_id")
+		->group_by("prj_emp_id")
+		->where("prj_last_version", 1) // last revied
+		->where("prj_sta_id", 3); // PO status
+
+		if($year != 0){
+
+			$this->db->where("YEAR(prj_wot_date)", $year);
+		}
+
+		if($period != 0){
+
+			$this->db->where("MONTH(prj_wot_date) >=", $start)
+			->where("MONTH(prj_wot_date) <=", $start + 2);
+		}
+
+		return $this->db->get();
+	}
 }
 ?>
