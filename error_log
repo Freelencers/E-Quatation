@@ -1,0 +1,174 @@
+[23-Sep-2017 01:33:44 UTC] PHP Fatal error:  Call to undefined function php_info() in /home/cp357577/public_html/OTEC/application/controllers/C_employee.php on line 29
+[23-Sep-2017 07:18:05 UTC] PHP Parse error:  syntax error, unexpected ':' in /home/cp357577/public_html/OTEC/application/controllers/C_login.php on line 77
+[23-Sep-2017 07:19:24 UTC] PHP Parse error:  syntax error, unexpected ':' in /home/cp357577/public_html/OTEC/application/controllers/C_login.php on line 77
+[23-Sep-2017 07:28:12 UTC] PHP Fatal error:  Call to undefined method CI_Loader::session_userdata() in /home/cp357577/public_html/OTEC/application/views/template.php on line 66
+[23-Sep-2017 07:28:26 UTC] PHP Fatal error:  Call to undefined method CI_Loader::session_userdata() in /home/cp357577/public_html/OTEC/application/views/template.php on line 66
+[23-Sep-2017 07:37:01 UTC] PHP Parse error:  syntax error, unexpected '<' in /home/cp357577/public_html/OTEC/application/views/template.php on line 74
+[23-Sep-2017 07:37:11 UTC] PHP Parse error:  syntax error, unexpected '<' in /home/cp357577/public_html/OTEC/application/views/template.php on line 74
+[24-Sep-2017 10:50:01 UTC] PHP Parse error:  syntax error, unexpected 'else' (T_ELSE), expecting function (T_FUNCTION) in /home/cp357577/public_html/OTEC/application/controllers/C_login.php on line 103
+[24-Sep-2017 10:50:36 UTC] PHP Fatal error:  Call to undefined method CI_DB_mysqli_driver::form() in /home/cp357577/public_html/OTEC/application/models/M_employee.php on line 129
+[24-Sep-2017 10:51:07 UTC] PHP Fatal error:  Call to undefined method CI_DB_mysqli_driver::form() in /home/cp357577/public_html/OTEC/application/models/M_employee.php on line 129
+[24-Sep-2017 10:51:08 UTC] PHP Fatal error:  Call to undefined method CI_DB_mysqli_driver::form() in /home/cp357577/public_html/OTEC/application/models/M_employee.php on line 129
+[24-Sep-2017 10:51:09 UTC] PHP Fatal error:  Call to undefined method CI_DB_mysqli_driver::form() in /home/cp357577/public_html/OTEC/application/models/M_employee.php on line 129
+[24-Sep-2017 10:51:09 UTC] PHP Fatal error:  Call to undefined method CI_DB_mysqli_driver::form() in /home/cp357577/public_html/OTEC/application/models/M_employee.php on line 129
+[24-Sep-2017 10:51:09 UTC] PHP Fatal error:  Call to undefined method CI_DB_mysqli_driver::form() in /home/cp357577/public_html/OTEC/application/models/M_employee.php on line 129
+[24-Sep-2017 10:51:56 UTC] PHP Fatal error:  Call to a member function num_rows() on array in /home/cp357577/public_html/OTEC/application/controllers/C_login.php on line 93
+[24-Sep-2017 18:20:04 Asia/Bangkok] PHP Fatal error:  Cannot use isset() on the result of a function call (you can use "null !== func()" instead) in /home/cp357577/public_html/OTEC/application/controllers/C_product.php on line 59
+[24-Sep-2017 18:20:08 Asia/Bangkok] PHP Fatal error:  Cannot use isset() on the result of a function call (you can use "null !== func()" instead) in /home/cp357577/public_html/OTEC/application/controllers/C_product.php on line 59
+[24-Sep-2017 18:23:17 Asia/Bangkok] PHP Fatal error:  Cannot use isset() on the result of a function call (you can use "null !== func()" instead) in /home/cp357577/public_html/OTEC/application/controllers/C_product.php on line 60
+[24-Sep-2017 18:23:20 Asia/Bangkok] PHP Fatal error:  Cannot use isset() on the result of a function call (you can use "null !== func()" instead) in /home/cp357577/public_html/OTEC/application/controllers/C_product.php on line 60
+[24-Sep-2017 18:26:06 Asia/Bangkok] PHP Parse error:  syntax error, unexpected '{' in /home/cp357577/public_html/OTEC/application/controllers/C_product.php on line 62
+[24-Oct-2017 22:45:33 Asia/Bangkok] PHP Fatal error:  Call to a member function SetFontPath() on null in /home/cp357577/public_html/develop/application/controllers/C_generate_pdf.php on line 34
+[26-Oct-2017 20:07:15 Asia/Bangkok] PHP Fatal error:  Call to undefined method M_item_set_log::get_item_set_log() in /home/cp357577/public_html/develop/application/controllers/C_item_set_log.php on line 43
+[27-Oct-2017 21:47:50 Asia/Bangkok] PHP Fatal error:  Call to undefined method CI_DB_mysqli_driver::delet() in /home/cp357577/public_html/develop/application/models/M_item_set.php on line 34
+[27-Oct-2017 21:49:29 Asia/Bangkok] PHP Fatal error:  Call to undefined method CI_DB_mysqli_driver::delet() in /home/cp357577/public_html/develop/application/models/M_item_set.php on line 34
+[27-Oct-2017 21:49:38 Asia/Bangkok] PHP Fatal error:  Call to undefined method CI_DB_mysqli_driver::delet() in /home/cp357577/public_html/develop/application/models/M_item_set.php on line 34
+[28-Oct-2017 15:00:13 Asia/Bangkok] PHP Fatal error:  Call to undefined function helper() in /home/cp357577/public_html/develop/application/controllers/C_follow.php on line 24
+[28-Oct-2017 15:01:04 Asia/Bangkok] PHP Fatal error:  Call to undefined function helper() in /home/cp357577/public_html/develop/application/controllers/C_follow.php on line 24
+[28-Oct-2017 15:01:05 Asia/Bangkok] PHP Fatal error:  Call to undefined function helper() in /home/cp357577/public_html/develop/application/controllers/C_follow.php on line 24
+[28-Oct-2017 23:37:05 Asia/Bangkok] PHP Fatal error:  Cannot use object of type stdClass as array in /home/cp357577/public_html/develop/application/controllers/C_hardware.php on line 95
+[29-Oct-2017 14:10:58 Asia/Bangkok] PHP Fatal error:  Call to undefined method M_employee::get_waiting_approve() in /home/cp357577/public_html/develop/application/controllers/C_employee.php on line 161
+[29-Oct-2017 14:11:39 Asia/Bangkok] PHP Fatal error:  Call to undefined function select() in /home/cp357577/public_html/develop/application/models/M_employee.php on line 60
+[29-Oct-2017 14:11:44 Asia/Bangkok] PHP Fatal error:  Call to undefined function select() in /home/cp357577/public_html/develop/application/models/M_employee.php on line 60
+[29-Oct-2017 14:12:23 Asia/Bangkok] PHP Fatal error:  Call to a member function result() on null in /home/cp357577/public_html/develop/application/controllers/C_employee.php on line 162
+[29-Oct-2017 14:12:38 Asia/Bangkok] PHP Fatal error:  Call to a member function result() on null in /home/cp357577/public_html/develop/application/controllers/C_employee.php on line 162
+[29-Oct-2017 21:36:52 Asia/Bangkok] PHP Fatal error:  Call to undefined method M_permission_module::get_permissio_by_emp_id() in /home/cp357577/public_html/develop/application/controllers/C_permission_module.php on line 28
+[29-Oct-2017 21:37:06 Asia/Bangkok] PHP Fatal error:  Call to undefined method M_permission_module::get_permissio_by_emp_id() in /home/cp357577/public_html/develop/application/controllers/C_permission_module.php on line 28
+[29-Oct-2017 21:38:05 Asia/Bangkok] PHP Fatal error:  Call to undefined method M_permission_module::get_permissio_by_emp_id() in /home/cp357577/public_html/develop/application/controllers/C_permission_module.php on line 28
+[29-Oct-2017 21:38:21 Asia/Bangkok] PHP Fatal error:  Call to undefined method M_permission_module::get_permissio_by_emp_id() in /home/cp357577/public_html/develop/application/controllers/C_permission_module.php on line 28
+[29-Oct-2017 21:38:53 Asia/Bangkok] PHP Fatal error:  Call to undefined method M_permission_module::get_permissio_by_emp_id() in /home/cp357577/public_html/develop/application/controllers/C_permission_module.php on line 28
+[30-Oct-2017 20:26:15 Asia/Bangkok] PHP Fatal error:  Call to a member function update_permission() on null in /home/cp357577/public_html/develop/application/controllers/C_permission_module.php on line 37
+[30-Oct-2017 20:26:18 Asia/Bangkok] PHP Fatal error:  Call to a member function update_permission() on null in /home/cp357577/public_html/develop/application/controllers/C_permission_module.php on line 37
+[30-Oct-2017 20:26:20 Asia/Bangkok] PHP Fatal error:  Call to a member function update_permission() on null in /home/cp357577/public_html/develop/application/controllers/C_permission_module.php on line 37
+[30-Oct-2017 20:35:54 Asia/Bangkok] PHP Fatal error:  Call to a member function update_permission() on null in /home/cp357577/public_html/develop/application/controllers/C_permission_module.php on line 37
+[30-Oct-2017 21:16:24 Asia/Bangkok] PHP Parse error:  syntax error, unexpected ';' in /home/cp357577/public_html/develop/application/controllers/C_generate_pdf.php on line 410
+[30-Oct-2017 21:33:13 Asia/Bangkok] PHP Fatal error:  Call to a member function Image() on null in /home/cp357577/public_html/develop/application/controllers/C_generate_pdf.php on line 442
+[30-Oct-2017 21:33:26 Asia/Bangkok] PHP Fatal error:  Call to a member function GetX() on null in /home/cp357577/public_html/develop/application/controllers/C_generate_pdf.php on line 442
+[30-Oct-2017 21:33:48 Asia/Bangkok] PHP Fatal error:  Call to a member function GetY() on null in /home/cp357577/public_html/develop/application/controllers/C_generate_pdf.php on line 442
+[30-Oct-2017 21:33:50 Asia/Bangkok] PHP Fatal error:  Call to a member function GetY() on null in /home/cp357577/public_html/develop/application/controllers/C_generate_pdf.php on line 442
+[31-Oct-2017 23:15:30 Asia/Bangkok] PHP Parse error:  syntax error, unexpected '$nav' (T_VARIABLE), expecting ',' or ';' in /home/cp357577/public_html/develop/application/controllers/C_follow.php on line 32
+[31-Oct-2017 23:15:52 Asia/Bangkok] PHP Parse error:  syntax error, unexpected '$nav' (T_VARIABLE), expecting ',' or ';' in /home/cp357577/public_html/develop/application/controllers/C_follow.php on line 32
+[01-Nov-2017 01:35:25 Asia/Bangkok] PHP Fatal error:  Call to a member function result() on array in /home/cp357577/public_html/develop/application/controllers/C_follow_up.php on line 39
+[01-Nov-2017 20:53:28 Asia/Bangkok] PHP Parse error:  syntax error, unexpected '*' in /home/cp357577/public_html/develop/application/models/M_permission_module.php on line 80
+[01-Nov-2017 21:12:05 Asia/Bangkok] PHP Parse error:  syntax error, unexpected 'return' (T_RETURN) in /home/cp357577/public_html/develop/application/models/M_follow_up.php on line 9
+[01-Nov-2017 21:28:57 Asia/Bangkok] PHP Fatal error:  Call to undefined method M_follow_up::get_project1() in /home/cp357577/public_html/develop/application/controllers/C_follow_up.php on line 41
+[01-Nov-2017 21:33:13 Asia/Bangkok] PHP Fatal error:  Call to a member function check_user_permission() on null in /home/cp357577/public_html/develop/application/controllers/C_project_mm.php on line 39
+[01-Nov-2017 21:48:00 Asia/Bangkok] PHP Parse error:  syntax error, unexpected 'as' (T_AS) in /home/cp357577/public_html/develop/application/models/M_follow_up.php on line 15
+[01-Nov-2017 22:46:47 Asia/Bangkok] PHP Fatal error:  Cannot redeclare log() in /home/cp357577/public_html/develop/application/helpers/log_helper.php on line 8
+[01-Nov-2017 22:50:08 Asia/Bangkok] PHP Fatal error:  Cannot redeclare log() in /home/cp357577/public_html/develop/application/helpers/log_helper.php on line 8
+[01-Nov-2017 22:51:29 Asia/Bangkok] PHP Fatal error:  Cannot redeclare log() in /home/cp357577/public_html/develop/application/helpers/log_helper.php on line 8
+[01-Nov-2017 23:43:08 Asia/Bangkok] PHP Parse error:  syntax error, unexpected '$key' (T_VARIABLE) in /home/cp357577/public_html/develop/application/controllers/C_follow_up.php on line 49
+[01-Nov-2017 23:44:14 Asia/Bangkok] PHP Fatal error:  Call to a member function result() on array in /home/cp357577/public_html/develop/application/controllers/C_follow_up.php on line 49
+[02-Nov-2017 22:40:07 Asia/Bangkok] PHP Fatal error:  Cannot use object of type CI_DB_mysqli_result as array in /home/cp357577/public_html/develop/application/controllers/C_employee.php on line 212
+[02-Nov-2017 22:47:05 Asia/Bangkok] PHP Fatal error:  Cannot use object of type CI_DB_mysqli_result as array in /home/cp357577/public_html/develop/application/controllers/C_employee.php on line 178
+[04-Nov-2017 15:02:57 Asia/Bangkok] PHP Parse error:  syntax error, unexpected ')' in /home/cp357577/public_html/develop/application/controllers/C_follow_up.php on line 74
+[05-Nov-2017 00:18:08 Asia/Bangkok] PHP Parse error:  syntax error, unexpected '$this' (T_VARIABLE), expecting ',' or ';' in /home/cp357577/public_html/develop/application/controllers/C_follow_up.php on line 65
+[05-Nov-2017 19:11:31 Asia/Bangkok] PHP Parse error:  syntax error, unexpected '$this' (T_VARIABLE) in /home/cp357577/public_html/develop/application/controllers/C_report_follow_up.php on line 36
+[05-Nov-2017 19:11:46 Asia/Bangkok] PHP Fatal error:  Call to undefined method CI_DB_mysqli_driver::select_count() in /home/cp357577/public_html/develop/application/models/M_report_follow_up.php on line 9
+[06-Nov-2017 00:18:26 Asia/Bangkok] PHP Parse error:  syntax error, unexpected '=', expecting ';' in /home/cp357577/public_html/develop/application/views/V_report_follow_up.php on line 144
+[06-Nov-2017 00:18:51 Asia/Bangkok] PHP Parse error:  syntax error, unexpected '=', expecting ';' in /home/cp357577/public_html/develop/application/views/V_report_follow_up.php on line 144
+[06-Nov-2017 00:18:52 Asia/Bangkok] PHP Parse error:  syntax error, unexpected '=', expecting ';' in /home/cp357577/public_html/develop/application/views/V_report_follow_up.php on line 144
+[06-Nov-2017 00:18:52 Asia/Bangkok] PHP Parse error:  syntax error, unexpected '=', expecting ';' in /home/cp357577/public_html/develop/application/views/V_report_follow_up.php on line 144
+[06-Nov-2017 00:18:53 Asia/Bangkok] PHP Parse error:  syntax error, unexpected '=', expecting ';' in /home/cp357577/public_html/develop/application/views/V_report_follow_up.php on line 144
+[06-Nov-2017 00:18:53 Asia/Bangkok] PHP Parse error:  syntax error, unexpected '=', expecting ';' in /home/cp357577/public_html/develop/application/views/V_report_follow_up.php on line 144
+[06-Nov-2017 00:19:07 Asia/Bangkok] PHP Parse error:  syntax error, unexpected 'i' (T_STRING), expecting ';' in /home/cp357577/public_html/develop/application/views/V_report_follow_up.php on line 144
+[06-Nov-2017 00:19:08 Asia/Bangkok] PHP Parse error:  syntax error, unexpected 'i' (T_STRING), expecting ';' in /home/cp357577/public_html/develop/application/views/V_report_follow_up.php on line 144
+[06-Nov-2017 00:19:37 Asia/Bangkok] PHP Parse error:  syntax error, unexpected '=' in /home/cp357577/public_html/develop/application/views/V_report_follow_up.php on line 144
+[06-Nov-2017 00:19:37 Asia/Bangkok] PHP Parse error:  syntax error, unexpected '=' in /home/cp357577/public_html/develop/application/views/V_report_follow_up.php on line 144
+[06-Nov-2017 00:19:38 Asia/Bangkok] PHP Parse error:  syntax error, unexpected '=' in /home/cp357577/public_html/develop/application/views/V_report_follow_up.php on line 144
+[06-Nov-2017 00:19:38 Asia/Bangkok] PHP Parse error:  syntax error, unexpected '=' in /home/cp357577/public_html/develop/application/views/V_report_follow_up.php on line 144
+[06-Nov-2017 00:19:38 Asia/Bangkok] PHP Parse error:  syntax error, unexpected '=' in /home/cp357577/public_html/develop/application/views/V_report_follow_up.php on line 144
+[06-Nov-2017 01:22:42 Asia/Bangkok] PHP Parse error:  syntax error, unexpected '?>', expecting ')' in /home/cp357577/public_html/develop/application/views/V_report_follow_up.php on line 144
+[06-Nov-2017 01:23:12 Asia/Bangkok] PHP Fatal error:  Call to a member function result() on array in /home/cp357577/public_html/develop/application/views/V_report_follow_up.php on line 144
+[06-Nov-2017 01:23:36 Asia/Bangkok] PHP Fatal error:  Call to a member function result() on array in /home/cp357577/public_html/develop/application/views/V_report_follow_up.php on line 144
+[06-Nov-2017 01:24:45 Asia/Bangkok] PHP Fatal error:  Call to a member function result() on array in /home/cp357577/public_html/develop/application/views/V_report_follow_up.php on line 144
+[06-Nov-2017 01:25:17 Asia/Bangkok] PHP Fatal error:  Call to a member function result() on array in /home/cp357577/public_html/develop/application/views/V_report_follow_up.php on line 144
+[06-Nov-2017 20:44:06 Asia/Bangkok] PHP Parse error:  syntax error, unexpected '<' in /home/cp357577/public_html/develop/application/controllers/C_report_follow_up.php on line 42
+[06-Nov-2017 21:15:29 Asia/Bangkok] PHP Parse error:  syntax error, unexpected 'return' (T_RETURN) in /home/cp357577/public_html/develop/application/models/M_report_follow_up.php on line 35
+[06-Nov-2017 21:21:49 Asia/Bangkok] PHP Parse error:  syntax error, unexpected '}', expecting ',' or ';' in /home/cp357577/public_html/develop/application/views/V_report_follow_up.php on line 24
+[07-Nov-2017 21:57:12 Asia/Bangkok] PHP Fatal error:  Call to a member function row_array() on array in /home/cp357577/public_html/develop/application/controllers/C_report_follow_up.php on line 73
+[08-Nov-2017 00:15:33 Asia/Bangkok] PHP Parse error:  syntax error, unexpected '?>', expecting function (T_FUNCTION) in /home/cp357577/public_html/develop/application/controllers/C_report_follow_up.php on line 135
+[08-Nov-2017 00:16:51 Asia/Bangkok] PHP Parse error:  syntax error, unexpected '?>', expecting function (T_FUNCTION) in /home/cp357577/public_html/develop/application/controllers/C_report_follow_up.php on line 135
+[08-Nov-2017 00:29:41 Asia/Bangkok] PHP Parse error:  syntax error, unexpected 'echo' (T_ECHO), expecting function (T_FUNCTION) in /home/cp357577/public_html/develop/application/controllers/C_report_follow_up.php on line 134
+[08-Nov-2017 00:42:58 Asia/Bangkok] PHP Fatal error:  Call to undefined function form_open() in /home/cp357577/public_html/develop/application/views/V_report_follow_up.php on line 16
+[08-Nov-2017 01:04:26 Asia/Bangkok] PHP Parse error:  syntax error, unexpected '=' in /home/cp357577/public_html/develop/application/controllers/C_report_follow_up.php on line 41
+[08-Nov-2017 20:33:37 Asia/Bangkok] PHP Parse error:  syntax error, unexpected 'as' (T_AS), expecting ';' in /home/cp357577/public_html/develop/application/views/V_report_follow_up.php on line 104
+[08-Nov-2017 20:34:03 Asia/Bangkok] PHP Parse error:  syntax error, unexpected 'as' (T_AS), expecting ';' in /home/cp357577/public_html/develop/application/views/V_report_follow_up.php on line 104
+[08-Nov-2017 20:35:05 Asia/Bangkok] PHP Parse error:  syntax error, unexpected 'as' (T_AS), expecting ';' in /home/cp357577/public_html/develop/application/views/V_report_follow_up.php on line 104
+[08-Nov-2017 20:35:25 Asia/Bangkok] PHP Parse error:  syntax error, unexpected 'as' (T_AS), expecting ';' in /home/cp357577/public_html/develop/application/views/V_report_follow_up.php on line 104
+[08-Nov-2017 20:35:28 Asia/Bangkok] PHP Parse error:  syntax error, unexpected 'as' (T_AS), expecting ';' in /home/cp357577/public_html/develop/application/views/V_report_follow_up.php on line 104
+[08-Nov-2017 20:36:47 Asia/Bangkok] PHP Parse error:  syntax error, unexpected 'as' (T_AS), expecting ';' in /home/cp357577/public_html/develop/application/views/V_report_follow_up.php on line 104
+[08-Nov-2017 20:37:01 Asia/Bangkok] PHP Parse error:  syntax error, unexpected 'as' (T_AS), expecting ';' in /home/cp357577/public_html/develop/application/views/V_report_follow_up.php on line 105
+[08-Nov-2017 20:37:02 Asia/Bangkok] PHP Parse error:  syntax error, unexpected 'as' (T_AS), expecting ';' in /home/cp357577/public_html/develop/application/views/V_report_follow_up.php on line 105
+[08-Nov-2017 20:37:33 Asia/Bangkok] PHP Parse error:  syntax error, unexpected 'as' (T_AS), expecting ';' in /home/cp357577/public_html/develop/application/views/V_report_follow_up.php on line 105
+[08-Nov-2017 20:37:33 Asia/Bangkok] PHP Parse error:  syntax error, unexpected 'as' (T_AS), expecting ';' in /home/cp357577/public_html/develop/application/views/V_report_follow_up.php on line 105
+[08-Nov-2017 20:37:34 Asia/Bangkok] PHP Parse error:  syntax error, unexpected 'as' (T_AS), expecting ';' in /home/cp357577/public_html/develop/application/views/V_report_follow_up.php on line 105
+[08-Nov-2017 20:37:34 Asia/Bangkok] PHP Parse error:  syntax error, unexpected 'as' (T_AS), expecting ';' in /home/cp357577/public_html/develop/application/views/V_report_follow_up.php on line 105
+[08-Nov-2017 20:38:12 Asia/Bangkok] PHP Parse error:  syntax error, unexpected 'AS' (T_AS), expecting ';' in /home/cp357577/public_html/develop/application/views/V_report_follow_up.php on line 104
+[08-Nov-2017 20:38:27 Asia/Bangkok] PHP Parse error:  syntax error, unexpected 'as' (T_AS), expecting ';' in /home/cp357577/public_html/develop/application/views/V_report_follow_up.php on line 104
+[08-Nov-2017 20:38:48 Asia/Bangkok] PHP Parse error:  syntax error, unexpected 'as' (T_AS), expecting ';' in /home/cp357577/public_html/develop/application/views/V_report_follow_up.php on line 104
+[08-Nov-2017 20:38:49 Asia/Bangkok] PHP Parse error:  syntax error, unexpected 'as' (T_AS), expecting ';' in /home/cp357577/public_html/develop/application/views/V_report_follow_up.php on line 104
+[08-Nov-2017 20:39:31 Asia/Bangkok] PHP Parse error:  syntax error, unexpected 'as' (T_AS), expecting ';' in /home/cp357577/public_html/develop/application/views/V_report_follow_up.php on line 104
+[08-Nov-2017 20:49:15 Asia/Bangkok] PHP Parse error:  syntax error, unexpected 'else' (T_ELSE) in /home/cp357577/public_html/develop/application/views/V_report_follow_up.php on line 118
+[08-Nov-2017 20:59:59 Asia/Bangkok] PHP Parse error:  syntax error, unexpected '}' in /home/cp357577/public_html/develop/application/views/V_report_follow_up.php on line 126
+[08-Nov-2017 21:45:34 Asia/Bangkok] PHP Parse error:  syntax error, unexpected '}' in /home/cp357577/public_html/develop/application/views/V_report_follow_up.php on line 117
+[08-Nov-2017 21:57:41 Asia/Bangkok] PHP Parse error:  syntax error, unexpected 'as' (T_AS), expecting ';' in /home/cp357577/public_html/develop/application/views/V_report_follow_up.php on line 104
+[08-Nov-2017 21:59:09 Asia/Bangkok] PHP Parse error:  syntax error, unexpected 'as' (T_AS), expecting ';' in /home/cp357577/public_html/develop/application/views/V_report_follow_up.php on line 104
+[08-Nov-2017 21:59:55 Asia/Bangkok] PHP Parse error:  syntax error, unexpected 'as' (T_AS), expecting ';' in /home/cp357577/public_html/develop/application/views/V_report_follow_up.php on line 104
+[08-Nov-2017 22:00:54 Asia/Bangkok] PHP Parse error:  syntax error, unexpected '}' in /home/cp357577/public_html/develop/application/views/V_report_follow_up.php on line 124
+[08-Nov-2017 22:41:03 Asia/Bangkok] PHP Fatal error:  Call to a member function result() on null in /home/cp357577/public_html/develop/application/views/V_report_follow_up.php on line 104
+[08-Nov-2017 22:41:37 Asia/Bangkok] PHP Parse error:  syntax error, unexpected '}' in /home/cp357577/public_html/develop/application/views/V_report_follow_up.php on line 124
+[08-Nov-2017 22:41:50 Asia/Bangkok] PHP Fatal error:  Call to a member function result() on null in /home/cp357577/public_html/develop/application/views/V_report_follow_up.php on line 104
+[08-Nov-2017 23:00:15 Asia/Bangkok] PHP Fatal error:  Call to undefined function num_row() in /home/cp357577/public_html/develop/application/controllers/C_report_follow_up.php on line 52
+[08-Nov-2017 23:00:28 Asia/Bangkok] PHP Fatal error:  Call to undefined function num_rows() in /home/cp357577/public_html/develop/application/controllers/C_report_follow_up.php on line 52
+[08-Nov-2017 23:02:59 Asia/Bangkok] PHP Fatal error:  Call to undefined function num_rows() in /home/cp357577/public_html/develop/application/controllers/C_report_follow_up.php on line 53
+[08-Nov-2017 23:30:41 Asia/Bangkok] PHP Fatal error:  Call to a member function num_rows() on string in /home/cp357577/public_html/develop/application/controllers/C_report_follow_up.php on line 54
+[08-Nov-2017 23:57:17 Asia/Bangkok] PHP Parse error:  syntax error, unexpected 'public' (T_PUBLIC) in /home/cp357577/public_html/develop/application/models/M_report_all_project.php on line 7
+[08-Nov-2017 23:57:45 Asia/Bangkok] PHP Parse error:  syntax error, unexpected '}' in /home/cp357577/public_html/develop/application/models/M_report_all_project.php on line 60
+[09-Nov-2017 19:18:10 Asia/Bangkok] PHP Fatal error:  Call to a member function result() on integer in /home/cp357577/public_html/develop/application/views/V_report_all_project.php on line 207
+[09-Nov-2017 20:08:16 Asia/Bangkok] PHP Fatal error:  Call to a member function result() on integer in /home/cp357577/public_html/develop/application/views/V_report_all_project.php on line 207
+[09-Nov-2017 20:08:33 Asia/Bangkok] PHP Fatal error:  Call to a member function result() on integer in /home/cp357577/public_html/develop/application/views/V_report_all_project.php on line 207
+[09-Nov-2017 20:08:35 Asia/Bangkok] PHP Fatal error:  Call to a member function result() on integer in /home/cp357577/public_html/develop/application/views/V_report_all_project.php on line 207
+[10-Nov-2017 21:56:22 Asia/Bangkok] PHP Parse error:  syntax error, unexpected ')', expecting ']' in /home/cp357577/public_html/develop/application/controllers/C_follow_up.php on line 55
+[12-Nov-2017 11:48:47 Asia/Bangkok] PHP Parse error:  syntax error, unexpected '=' in /home/cp357577/public_html/develop/application/controllers/C_follow_up.php on line 51
+[13-Nov-2017 20:17:23 Asia/Bangkok] PHP Parse error:  syntax error, unexpected 'echo' (T_ECHO) in /home/cp357577/public_html/develop/application/controllers/C_quatation_mm.php on line 61
+[13-Nov-2017 20:17:23 Asia/Bangkok] PHP Parse error:  syntax error, unexpected 'echo' (T_ECHO) in /home/cp357577/public_html/develop/application/controllers/C_quatation_mm.php on line 61
+[15-Nov-2017 09:58:29 Asia/Bangkok] PHP Parse error:  syntax error, unexpected 'YEAR' (T_STRING) in /home/cp357577/public_html/develop/application/models/M_report_all_project.php on line 52
+[15-Nov-2017 23:05:27 Asia/Bangkok] PHP Fatal error:  Cannot use object of type CI_DB_mysqli_result as array in /home/cp357577/public_html/develop/application/controllers/C_project.php on line 69
+[15-Nov-2017 23:05:27 Asia/Bangkok] PHP Fatal error:  Cannot use object of type CI_DB_mysqli_result as array in /home/cp357577/public_html/develop/application/controllers/C_project.php on line 100
+[15-Nov-2017 23:05:27 Asia/Bangkok] PHP Fatal error:  Cannot use object of type CI_DB_mysqli_result as array in /home/cp357577/public_html/develop/application/controllers/C_system_log.php on line 40
+[15-Nov-2017 23:12:22 Asia/Bangkok] PHP Fatal error:  Cannot use object of type CI_DB_mysqli_result as array in /home/cp357577/public_html/develop/application/controllers/C_project.php on line 110
+[15-Nov-2017 23:15:18 Asia/Bangkok] PHP Fatal error:  Cannot use object of type CI_DB_mysqli_result as array in /home/cp357577/public_html/develop/application/controllers/C_project.php on line 110
+[16-Nov-2017 19:16:05 Asia/Bangkok] PHP Fatal error:  Cannot use object of type CI_DB_mysqli_result as array in /home/cp357577/public_html/develop/application/controllers/C_project.php on line 110
+[16-Nov-2017 19:19:18 Asia/Bangkok] PHP Fatal error:  Cannot use object of type CI_DB_mysqli_result as array in /home/cp357577/public_html/develop/application/controllers/C_project.php on line 110
+[16-Nov-2017 19:21:44 Asia/Bangkok] PHP Fatal error:  Cannot use object of type CI_DB_mysqli_result as array in /home/cp357577/public_html/develop/application/controllers/C_project.php on line 110
+[16-Nov-2017 21:42:44 Asia/Bangkok] PHP Fatal error:  Cannot use object of type CI_DB_mysqli_result as array in /home/cp357577/public_html/develop/application/controllers/C_project.php on line 110
+[16-Nov-2017 21:45:29 Asia/Bangkok] PHP Fatal error:  Cannot use object of type CI_DB_mysqli_result as array in /home/cp357577/public_html/develop/application/controllers/C_project.php on line 110
+[18-Nov-2017 11:59:29 Asia/Bangkok] PHP Fatal error:  Class declarations may not be nested in /home/cp357577/public_html/develop/application/controllers/C_generate_pdf.php on line 39
+[18-Nov-2017 12:00:00 Asia/Bangkok] PHP Fatal error:  Class declarations may not be nested in /home/cp357577/public_html/develop/application/controllers/C_generate_pdf.php on line 150
+[18-Nov-2017 12:08:16 Asia/Bangkok] PHP Fatal error:  Call to a member function SetFontPath() on null in /home/cp357577/public_html/develop/application/controllers/C_generate_pdf.php on line 37
+[18-Nov-2017 12:08:53 Asia/Bangkok] PHP Fatal error:  Call to a member function SetFontPath() on null in /home/cp357577/public_html/develop/application/controllers/C_generate_pdf.php on line 37
+[18-Nov-2017 12:09:17 Asia/Bangkok] PHP Fatal error:  Call to a member function SetFontPath() on null in /home/cp357577/public_html/develop/application/controllers/C_generate_pdf.php on line 37
+[18-Nov-2017 12:10:32 Asia/Bangkok] PHP Fatal error:  Call to a member function AddFont() on null in /home/cp357577/public_html/develop/application/libraries/Pdf_quatation.php on line 15
+[18-Nov-2017 12:10:53 Asia/Bangkok] PHP Fatal error:  Call to a member function AddFont() on null in /home/cp357577/public_html/develop/application/libraries/Pdf_quatation.php on line 15
+[18-Nov-2017 12:37:20 Asia/Bangkok] PHP Fatal error:  Call to undefined function GetY() in /home/cp357577/public_html/develop/application/controllers/C_generate_pdf.php on line 204
+[18-Nov-2017 13:00:04 Asia/Bangkok] PHP Fatal error:  Call to undefined method Pdf_quatation::table_header() in /home/cp357577/public_html/develop/application/controllers/C_generate_pdf.php on line 221
+[18-Nov-2017 13:01:04 Asia/Bangkok] PHP Fatal error:  Call to undefined method Pdf_quatation::header_table() in /home/cp357577/public_html/develop/application/controllers/C_generate_pdf.php on line 221
+[18-Nov-2017 13:01:44 Asia/Bangkok] PHP Fatal error:  Call to undefined method Pdf_quatation::header_table() in /home/cp357577/public_html/develop/application/controllers/C_generate_pdf.php on line 221
+[18-Nov-2017 13:02:15 Asia/Bangkok] PHP Fatal error:  Call to undefined method Pdf_quatation::header_table() in /home/cp357577/public_html/develop/application/controllers/C_generate_pdf.php on line 221
+[18-Nov-2017 13:06:01 Asia/Bangkok] PHP Parse error:  syntax error, unexpected ',' in /home/cp357577/public_html/develop/application/controllers/C_generate_pdf.php on line 221
+[18-Nov-2017 13:06:10 Asia/Bangkok] PHP Parse error:  syntax error, unexpected ',' in /home/cp357577/public_html/develop/application/controllers/C_generate_pdf.php on line 221
+[18-Nov-2017 13:06:20 Asia/Bangkok] PHP Parse error:  syntax error, unexpected ',' in /home/cp357577/public_html/develop/application/controllers/C_generate_pdf.php on line 221
+[18-Nov-2017 13:06:35 Asia/Bangkok] PHP Parse error:  syntax error, unexpected ',' in /home/cp357577/public_html/develop/application/controllers/C_generate_pdf.php on line 221
+[18-Nov-2017 13:06:37 Asia/Bangkok] PHP Fatal error:  Call to undefined function GetY() in /home/cp357577/public_html/develop/application/controllers/C_generate_pdf.php on line 221
+[18-Nov-2017 13:06:37 Asia/Bangkok] PHP Fatal error:  Call to undefined function GetY() in /home/cp357577/public_html/develop/application/controllers/C_generate_pdf.php on line 221
+[18-Nov-2017 13:06:37 Asia/Bangkok] PHP Fatal error:  Call to undefined function GetY() in /home/cp357577/public_html/develop/application/controllers/C_generate_pdf.php on line 221
+[18-Nov-2017 13:06:38 Asia/Bangkok] PHP Fatal error:  Call to undefined function GetY() in /home/cp357577/public_html/develop/application/controllers/C_generate_pdf.php on line 221
+[18-Nov-2017 13:20:39 Asia/Bangkok] PHP Fatal error:  Cannot redeclare class FPDF in /home/cp357577/public_html/develop/application/libraries/fpdf.php on line 12
+[18-Nov-2017 13:21:24 Asia/Bangkok] PHP Fatal error:  Cannot redeclare class FPDF in /home/cp357577/public_html/develop/application/libraries/fpdf.php on line 12
+[18-Nov-2017 16:07:17 Asia/Bangkok] PHP Parse error:  syntax error, unexpected ';' in /home/cp357577/public_html/develop/application/controllers/C_follow_up.php on line 26
+[19-Nov-2017 12:54:24 Asia/Bangkok] PHP Parse error:  syntax error, unexpected '->' (T_OBJECT_OPERATOR) in /home/cp357577/public_html/develop/application/models/M_follow_up.php on line 85
+[19-Nov-2017 22:01:05 Asia/Bangkok] PHP Parse error:  syntax error, unexpected '$config' (T_VARIABLE) in /home/cp357577/public_html/demo/application/config/config.php on line 38
+[19-Nov-2017 22:01:19 Asia/Bangkok] PHP Parse error:  syntax error, unexpected '$config' (T_VARIABLE) in /home/cp357577/public_html/demo/application/config/config.php on line 38
+[19-Nov-2017 22:01:25 Asia/Bangkok] PHP Parse error:  syntax error, unexpected '$config' (T_VARIABLE) in /home/cp357577/public_html/demo/application/config/config.php on line 38
+[19-Nov-2017 22:01:28 Asia/Bangkok] PHP Parse error:  syntax error, unexpected '$config' (T_VARIABLE) in /home/cp357577/public_html/demo/application/config/config.php on line 38
